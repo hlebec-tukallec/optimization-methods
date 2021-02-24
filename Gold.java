@@ -1,8 +1,7 @@
-import javax.swing.plaf.IconUIResource;
-
 public class Gold implements Method {
+    private double res;
 
-    private double count() {
+    private void count() {
         double a, b, x1, x2;
         a = A;
         b = B;
@@ -26,11 +25,12 @@ public class Gold implements Method {
                 f2 = Method.f(x2);
             }
         } while (Math.abs(b - a) > EPS);
-        return (x1 + x2) / 2;
+        res = (x1 + x2) / 2;
     }
 
     @Override
     public double print() {
-        return count();
+        count();
+        return res;
     }
 }

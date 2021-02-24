@@ -1,6 +1,7 @@
 public class Dichotomy implements Method {
+    private double res;
 
-    private double count() {
+    private void count() {
         double a, b, c;
         a = A;
         b = B;
@@ -12,11 +13,12 @@ public class Dichotomy implements Method {
                 b = c;
             }
         }
-        return (a + b) / 2;
+        res = (a + b) / 2;
     }
 
     @Override
     public double print() {
-        return count();
+        count();
+        return res;
     }
 }
