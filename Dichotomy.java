@@ -1,12 +1,12 @@
 public class Dichotomy implements Method {
-    private double res;
+    private double DELTA = EPS / 4;
 
-    private void count() {
+    @Override
+    public double count() {
         double a, b, x1, x2;
-        a = A;
-        b = B;
+        a = leftBound;
+        b = rightBound;
         while (Math.abs(b - a) > EPS) {
-
             x1 = (a + b) / 2 - DELTA;
             x2 = (a + b) / 2 + DELTA;
 
@@ -16,12 +16,8 @@ public class Dichotomy implements Method {
                 b = x2;
             }
         }
-        res = (a + b) / 2;
-    }
-
-    @Override
-    public double print() {
-        count();
-        return res;
+        return (a + b) / 2;
     }
 }
+
+
