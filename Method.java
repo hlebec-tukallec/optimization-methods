@@ -1,5 +1,5 @@
 public interface Method {
-    double EPS = Math.exp(-25);
+    double EPS = Math.exp(-20);
     double leftBound = -0.5;
     double rightBound = 0.5;
 
