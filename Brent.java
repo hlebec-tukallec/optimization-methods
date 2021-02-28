@@ -9,10 +9,11 @@ public class Brent implements Method {
                 ((x2 - x1) * (f2 - f3) - (x2 - x3) * (f2 - f1));
     }
 
-    private double count() {
+    @Override
+    public double count() {
         double a, c, x, w, v, k, fx, fw, fv, d, e, g, u, fu;
-        a = A;
-        c = B;
+        a = leftBound;
+        c = rightBound;
         x = w = v = (a + c) / 2;
         k = (3 - Math.sqrt(5)) / 2;
         fx = fw = fv = Method.f(x);
@@ -74,10 +75,5 @@ public class Brent implements Method {
         }
         return x;
 
-    }
-
-    @Override
-    public double print() {
-        return count();
     }
 }
