@@ -1,6 +1,8 @@
 public interface Method {
     double EPS = Math.exp(-10);
+    double DELTA = EPS / 4;
     double PHI = (1 + Math.sqrt(5)) / 2;
+    double ANTIPHI = (1 - Math.sqrt(5)) / 2;
     double RESPHI = 2 - PHI;
 
     double A = -0.5;
