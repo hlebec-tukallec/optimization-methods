@@ -19,7 +19,6 @@ public class Brent implements Method {
         fx = fw = fv = Method.f(x);
         d = e = c - a;
         double tol;
-        int cnt = 0;
         while (Math.abs(c - a) > EPS) {
             g = e;
             e = d;
