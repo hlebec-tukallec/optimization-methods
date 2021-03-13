@@ -21,10 +21,6 @@ public class Brent implements Method {
         double tol;
         int cnt = 0;
         while (Math.abs(c - a) > EPS) {
-
-
-            cnt++;
-
             g = e;
             e = d;
             tol = e * Math.abs(x) + EPS / 10;
