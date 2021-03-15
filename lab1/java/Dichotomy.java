@@ -3,16 +3,10 @@ public class Dichotomy implements Method {
 
     @Override
     public double count() {
-        double a, b, x1, x2;
-        a = leftBound;
-        b = rightBound;
-
+        double a = leftBound, b = rightBound, x1, x2;
         while (Math.abs(b - a) > EPS) {
-
             x1 = (a + b) / 2 - DELTA;
             x2 = (a + b) / 2 + DELTA;
-
-
             if (Method.f(x1) > Method.f(x2)) {
                 a = x1;
             } else {

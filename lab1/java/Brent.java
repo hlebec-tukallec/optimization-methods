@@ -15,37 +15,33 @@ public class Brent implements Method {
         double a, c, x, w, v, fx, fw, fv, d, e, g, u, fu;
         a = leftBound;
         c = rightBound;
-        x = w = v = a + k * (c - a);
+        u = x = w = v = a + k * (c - a);
         fx = fw = fv = Method.f(x);
         d = e = c - a;
-        double tol;
-        while (Math.abs(c - a) > EPS) {
+        boolean isParabola;
+        while (d > EPS) {
+            isParabola = false;
             g = e;
             e = d;
-            tol = e * Math.abs(x) + EPS / 10;
-            if (Math.abs(x - (a + c) / 2) + (c - a) / 2 <= 2 * tol) {
-                break;
-            }
-            if (areDifferent(x, w, v) && areDifferent(fx, fw, fv)) {
+            if (areDifferent(x, w, v) && areDifferent(fx, fw, fv)) { //предполагаем метод парабол
                 u = parabola(x, w, v, fx, fw, fv);
-                if (u >= a && u <= c && Math.abs(u - x) < g / 2) {
-                    if ((u - a) < 2 * tol || (c - u) < 2 * tol) {
-                        u = x - Math.signum(x - (a + c) / 2) * tol;
-                    }
+                if (u >= a + EPS && u <= c - EPS && Math.abs(u - x) < g / 2) { //метод парабол оптимален
+                    d = Math.abs(u - x);
+                    isParabola = true;
                 }
-            } else {
-                if (x < (a + c) / 2) {
+            }
+            if (!isParabola) { // золотое сечение
+                if (x < (c - a) / 2) {
                     u = x + k * (c - x);
-                    e = c - x;
+                    d = c - x;
                 } else {
                     u = x - k * (x - a);
-                    e = x - a;
+                    d = x - a;
+                }
+                if (Math.abs(u - x) < EPS) {
+                    u = x + Math.signum(u - x) * EPS;
                 }
             }
-            if (Math.abs(u - x) < tol) {
-                u = x + Math.signum(u - x) * tol;
-            }
-            d = Math.abs(u - x);
             fu = Method.f(u);
             if (fu <= fx) {
                 if (u >= x) {

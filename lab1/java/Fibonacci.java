@@ -17,18 +17,12 @@ public class Fibonacci implements Method {
 
     @Override
     public double count() {
-        double x1, x2, a, b, f1, f2;
-
-        a = leftBound;
-        b = rightBound;
+        double a = leftBound, b = rightBound, x1, x2, f1, f2;
         x1 = a + fib(n - 2) / fib(n) * (b - a);
         x2 = a + fib(n - 1) / fib(n) * (b - a);
         f1 = Method.f(x1);
         f2 = Method.f(x2);
-
         for (int i = 1; i <= n - 2; i++) {
-
-
             if (f1 > f2) {
                 a = x1;
                 x1 = x2;
@@ -40,9 +34,7 @@ public class Fibonacci implements Method {
             }
             f1 = Method.f(x1);
             f2 = Method.f(x2);
-
         }
-
         return (a + b) / 2;
     }
 }

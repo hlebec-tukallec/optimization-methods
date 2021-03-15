@@ -3,14 +3,12 @@ public class Gold implements Method {
 
     @Override
     public double count() {
-        double a = leftBound, b = rightBound, x1, x2;
+        double a = leftBound, b = rightBound, x1, x2, f1, f2;
         x1 = a + PHI * (b - a);
         x2 = b - PHI * (b - a);
-        double f1, f2;
         f1 = Method.f(x1);
         f2 = Method.f(x2);
         while (Math.abs(b - a) > EPS) {
-
             if (f1 < f2) {
                 b = x2;
                 x2 = x1;
