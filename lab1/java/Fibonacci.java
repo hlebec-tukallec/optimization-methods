@@ -1,7 +1,13 @@
 public class Fibonacci implements Method {
     private final double PHI = (1 + Math.sqrt(5)) / 2;
     private final double ANTI_PHI = (1 - Math.sqrt(5)) / 2;
-    private final long n = 30;
+    private long n = 0;
+
+    private void countN() {
+        while ((rightBound - leftBound) / EPS >= fib(n + 2)) {
+            n += 1;
+        }
+    }
 
     private double fib(long x) {
         return (1 / Math.sqrt(5)) * (Math.pow(PHI, x) - Math.pow(ANTI_PHI, x));
@@ -18,6 +24,7 @@ public class Fibonacci implements Method {
     @Override
     public double count() {
         double a = leftBound, b = rightBound, x1, x2, f1, f2;
+        countN();
         x1 = a + fib(n - 2) / fib(n) * (b - a);
         x2 = a + fib(n - 1) / fib(n) * (b - a);
         f1 = Method.f(x1);
@@ -26,14 +33,16 @@ public class Fibonacci implements Method {
             if (f1 > f2) {
                 a = x1;
                 x1 = x2;
+                f1 = f2;
                 x2 = findPlace(a, b, i, false);
+                f2 = Method.f(x2);
             } else {
                 b = x2;
                 x2 = x1;
+                f2 = f1;
                 x1 = findPlace(a, b, i, true);
+                f1 = Method.f(x1);
             }
-            f1 = Method.f(x1);
-            f2 = Method.f(x2);
         }
         return (a + b) / 2;
     }

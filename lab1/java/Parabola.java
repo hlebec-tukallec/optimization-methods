@@ -3,8 +3,9 @@ public class Parabola implements Method {
     @Override
     public double count() {
         double x1 = leftBound, x2, x3 = rightBound;
-        x2 = findPoint(x1, x3);
-        double f1 = Method.f(x1), f2 = Method.f(x2), f3 = Method.f(x3), fx;
+        double f1 = Method.f(x1), f3 = Method.f(x3);
+        x2 = findPoint(x1, x3, f1, f3);
+        double f2 = Method.f(x2), fx;
         double prevX = 0;
         double x = 1;
 
@@ -42,8 +43,8 @@ public class Parabola implements Method {
                 / ((f3 - f1) / (x3 - x1) - (f2 - f1) / (x2 - x1))));
     }
 
-    private double findPoint(double x, double y) {
-        double z, fz, fx = Method.f(x), fy = Method.f(y);
+    private double findPoint(double x, double y, double fx, double fy) {
+        double z, fz;
         while (true) {
             z = (x + y) / 2;
             fz = Method.f(z);
