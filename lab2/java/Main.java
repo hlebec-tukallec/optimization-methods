@@ -1,11 +1,12 @@
 public class Main {
-    private static final Point point = new Point(-1, 1);
-    private static final double EPS = 0.000001;
-    private static final String mod = "1";
-
 
     public static void main(String[] args) {
-        Source source = new Source(mod, point, EPS);
+        double[][] A = {{2, 0}, {0, 2}};
+        double[] B = {0, 0};
+        double C = 0;
+        Point p = new Point(new double[]{-1, 1});
+
+        Source source = new Source(A, B, C, p);
         Method gradDown = new GradDown(source);
         gradDown.findMinimum();
         Method fastDown = new FastDown(source);

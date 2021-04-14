@@ -5,16 +5,16 @@ public class GradDown implements Method {
         this.source = source;
     }
 
-    private Point gradDownImpl() {
+    @Override
+    public Point count() {
         Point cur = source.point, gradient;
-        Double curValue = source.func.apply(cur);
-
+        double curValue = source.getFunctionValue(cur);
         double lambda = 0.01;
         do {
-            gradient = source.gradient.apply(cur);
+            gradient = source.getGradient(cur);
             while (true) {
                 Point next = countNewPoint(cur, gradient, lambda);
-                Double nextValue = source.func.apply(next);
+                double nextValue = source.getFunctionValue(next);
                 if (nextValue < curValue) {
                     cur = next;
                     curValue = nextValue;
@@ -23,12 +23,7 @@ public class GradDown implements Method {
                     lambda = lambda / 2;
                 }
             }
-        } while (getMod(gradient) >= source.EPS);
+        } while (getMod(gradient) > source.EPS);
         return cur;
-    }
-
-    public void findMinimum() {
-        Point ans = gradDownImpl();
-        System.out.println(ans.x + " " + ans.y);
     }
 }

@@ -1,16 +1,11 @@
 public class Point {
-    double x, y;
+    private final double[] coordinates;
 
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
+    public Point(double[] coordinates) {
+        this.coordinates = coordinates;
     }
 
-    @Override
-    public String toString() {
-        return "Point{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+    public double[] getCoordinates() {
+        return coordinates;
     }
 }

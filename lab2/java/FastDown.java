@@ -7,20 +7,15 @@ public class FastDown implements Method {
         EPS = source.EPS;
     }
 
-
-    private Point fastDownImpl() {
+    @Override
+    public Point count() {
         Point cur = source.point, gradient;
         do {
-            gradient = source.gradient.apply(cur);
+            gradient = source.getGradient(cur);
             double lambda = calculateLambda(gradient, cur);
             cur = countNewPoint(cur, gradient, lambda);
         } while (getMod(gradient) >= source.EPS);
         return cur;
-    }
-
-    public void findMinimum() {
-        Point ans = fastDownImpl();
-        System.out.println(ans.x + " " + ans.y);
     }
 
     public double calculateLambda(Point grad, Point p) {
@@ -53,6 +48,6 @@ public class FastDown implements Method {
     }
 
     double simplify(double x, Point grad, Point p) {
-        return source.func.apply(new Point(p.x - x * grad.x, p.y - x * grad.y));
+        return source.getFunctionValue(countNewPoint(p, grad, x));
     }
 }
