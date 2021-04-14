@@ -7,8 +7,8 @@ public class Main {
     public static void main(String[] args) {
         Source source = new Source(mod, point, EPS);
         Method gradDown = new GradDown(source);
-        gradDown.count();
+        gradDown.findMinimum();
         Method fastDown = new FastDown(source);
-        fastDown.count();
+        fastDown.findMinimum();
     }
 }

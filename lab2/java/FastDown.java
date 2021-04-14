@@ -1,17 +1,33 @@
-public class FastDown extends CommonDown {
+public class FastDown implements Method {
     private static double EPS;
+    private final Source source;
 
     public FastDown(Source source) {
-        super(source);
+        this.source = source;
         EPS = source.EPS;
     }
 
-    @Override
-    public double calculateLambda(Point grad, Point p, double lambda) {
+
+    private Point fastDownImpl() {
+        Point cur = source.point, gradient;
+        do {
+            gradient = source.gradient.apply(cur);
+            double lambda = calculateLambda(gradient, cur);
+            cur = countNewPoint(cur, gradient, lambda);
+        } while (getMod(gradient) >= source.EPS);
+        return cur;
+    }
+
+    public void findMinimum() {
+        Point ans = fastDownImpl();
+        System.out.println(ans.x + " " + ans.y);
+    }
+
+    public double calculateLambda(Point grad, Point p) {
         final double phi = 1.6180339887;
         double x1, x2, y1, y2;
         double l = 0;
-        double r = 0.05;
+        double r = 0.01;
 
         x1 = r - ((r - l) / phi);
         x2 = l + ((r - l) / phi);
@@ -34,5 +50,9 @@ public class FastDown extends CommonDown {
             }
         }
         return (r + l) / 2;
+    }
+
+    double simplify(double x, Point grad, Point p) {
+        return source.func.apply(new Point(p.x - x * grad.x, p.y - x * grad.y));
     }
 }
