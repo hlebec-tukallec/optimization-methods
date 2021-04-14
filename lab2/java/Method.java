@@ -1,6 +1,8 @@
 import java.util.Arrays;
 
 public interface Method {
+    double EPS = 0.00001;
+
     Point count();
 
     default Point countNewPoint(Point p, Point grad, double lambda) {

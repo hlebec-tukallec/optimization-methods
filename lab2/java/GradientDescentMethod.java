@@ -1,7 +1,7 @@
-public class GradDown implements Method {
+public class GradientDescentMethod implements Method {
     private final Source source;
 
-    public GradDown(Source source) {
+    public GradientDescentMethod(Source source) {
         this.source = source;
     }
 
@@ -23,7 +23,7 @@ public class GradDown implements Method {
                     lambda = lambda / 2;
                 }
             }
-        } while (getMod(gradient) > source.EPS);
+        } while (getMod(gradient) >= EPS);
         return cur;
     }
 }

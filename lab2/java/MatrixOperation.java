@@ -32,4 +32,22 @@ public class MatrixOperation {
         }
         return c;
     }
+
+    public static double[] subtract(double[] a, double[] b) {
+        int l = a.length;
+        double[] c = new double[l];
+        for (int i = 0; i < l; ++i) {
+            c[i] = a[i] - b[i];
+        }
+        return c;
+    }
+
+    public static double[] multiply(double[] a, double b) {
+        int l = a.length;
+        double[] c = new double[l];
+        for (int i = 0; i < l; ++i) {
+            c[i] = a[i] * b;
+        }
+        return c;
+    }
 }
