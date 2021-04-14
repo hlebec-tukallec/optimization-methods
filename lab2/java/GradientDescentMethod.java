@@ -1,5 +1,6 @@
 public class GradientDescentMethod implements Method {
     private final Source source;
+    public int iter = 0;
 
     public GradientDescentMethod(Source source) {
         this.source = source;
@@ -17,6 +18,7 @@ public class GradientDescentMethod implements Method {
                 double nextValue = source.getFunctionValue(next);
                 if (nextValue < curValue) {
                     cur = next;
+                    iter++;
                     curValue = nextValue;
                     break;
                 } else {

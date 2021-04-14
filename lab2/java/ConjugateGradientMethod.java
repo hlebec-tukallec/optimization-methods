@@ -1,33 +1,41 @@
 public class ConjugateGradientMethod implements Method {
     private final Source source;
-
+    int iter = 0;
     public ConjugateGradientMethod(Source source) {
         this.source = source;
+    }
+
+    private Point countNew(Point p, Point grad, double lambda) {
+        int n = p.getCoordinates().length;
+        double[] coordinates = new double[n];
+        for (int i = 0; i < n; i++) {
+            coordinates[i] = p.getCoordinates()[i] + lambda * grad.getCoordinates()[i];
+        }
+        return new Point(coordinates);
     }
 
     @Override
     public Point count() {
         Point curX = source.point, curGradient = source.getGradient(curX);
-        Point curP = new Point(MatrixOperation.multiply(curGradient.getCoordinates(),
-                -1D));
-
+        Point curP = new Point(MatrixOperation.multiply(curGradient.getCoordinates(), -1D));
         do {
-            double betta = 0;
-            for (int i = 1; i < source.N ; i++) {
+            for (int i = 0; i < source.N && getMod(curGradient) > EPS; i++) {
                 double alfa = Math.pow(getMod(source.getGradient(curX)), 2) /
                         MatrixOperation.multiply(MatrixOperation.multiply(source.A, curP.getCoordinates()), curP.getCoordinates());
-                /**/Point newX = countNewPoint(curX, curP, alfa);
-                Point newGradient = countNewPoint(curGradient,
+                Point newX = countNew(curX, curP, alfa);
+                Point newGradient = countNew(curGradient,
                         new Point(MatrixOperation.multiply(source.A, curP.getCoordinates()))
                         , alfa);
+                double betta = (i == 0) ? 0 : Math.pow(getMod(source.getGradient(newX)), 2) /
+                        Math.pow(getMod(source.getGradient(curX)), 2);
                 Point newP = new Point(MatrixOperation.add(
                         MatrixOperation.multiply(newGradient.getCoordinates(), -1D),
                         MatrixOperation.multiply(curP.getCoordinates(), betta)));
-                betta = Math.pow(getMod(source.getGradient(newX)), 2) /
-                        Math.pow(getMod(source.getGradient(curX)), 2);
+
                 curX = newX;
                 curP = newP;
                 curGradient = newGradient;
+                iter++;
             }
         } while (getMod(curGradient) > EPS);
         return curX;

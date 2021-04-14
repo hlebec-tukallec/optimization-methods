@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public interface Method {
-    double EPS = 0.00001;
+    double EPS = 0.0001;
 
     Point count();
 
