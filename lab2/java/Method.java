@@ -17,9 +17,4 @@ public interface Method {
     default double getMod(Point p) {
         return Math.sqrt(Arrays.stream(p.getCoordinates()).map(x -> x * x).sum());
     }
-
-    default void findMinimum() {
-        Point ans = count();
-        System.out.println(Arrays.toString(ans.getCoordinates()));
-    }
 }

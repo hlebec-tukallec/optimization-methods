@@ -1,6 +1,6 @@
 public class ConjugateGradientMethod implements Method {
     private final Source source;
-    int iter = 0;
+
     public ConjugateGradientMethod(Source source) {
         this.source = source;
     }
@@ -20,11 +20,12 @@ public class ConjugateGradientMethod implements Method {
         Point curP = new Point(MatrixOperation.multiply(curGradient.getCoordinates(), -1D));
         do {
             for (int i = 0; i < source.N && getMod(curGradient) > EPS; i++) {
+                double[] curApK = MatrixOperation.multiply(source.A, curP.getCoordinates());
                 double alfa = Math.pow(getMod(source.getGradient(curX)), 2) /
-                        MatrixOperation.multiply(MatrixOperation.multiply(source.A, curP.getCoordinates()), curP.getCoordinates());
+                        MatrixOperation.multiply(curApK, curP.getCoordinates());
                 Point newX = countNew(curX, curP, alfa);
                 Point newGradient = countNew(curGradient,
-                        new Point(MatrixOperation.multiply(source.A, curP.getCoordinates()))
+                        new Point(curApK)
                         , alfa);
                 double betta = (i == 0) ? 0 : Math.pow(getMod(source.getGradient(newX)), 2) /
                         Math.pow(getMod(source.getGradient(curX)), 2);
@@ -35,7 +36,6 @@ public class ConjugateGradientMethod implements Method {
                 curX = newX;
                 curP = newP;
                 curGradient = newGradient;
-                iter++;
             }
         } while (getMod(curGradient) > EPS);
         return curX;

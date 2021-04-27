@@ -1,6 +1,5 @@
 public class SteepestDescentMethod implements Method {
     private final Source source;
-    int iter = 0;
 
     public SteepestDescentMethod(Source source) {
         this.source = source;
@@ -9,12 +8,14 @@ public class SteepestDescentMethod implements Method {
     @Override
     public Point count() {
         Point cur = source.point, gradient;
-        do {
+        while(true) {
             gradient = source.getGradient(cur);
+            if (getMod(gradient) < EPS) {
+                break;
+            }
             double lambda = calculateLambda(gradient, cur);
             cur = countNewPoint(cur, gradient, lambda);
-            iter++;
-        } while (getMod(gradient) >= EPS);
+        }
         return cur;
     }
 
