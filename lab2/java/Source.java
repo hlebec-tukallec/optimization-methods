@@ -4,12 +4,13 @@ public class Source {
     public final double C;
     public final Point point;
     public final int N;
+
     public Source(double[][] a, double[] b, double c, Point point) {
         A = a;
         B = b;
         this.C = c;
         this.point = point;
-        N = a.length*1000;
+        N = a.length;
     }
 
     public double getFunctionValue(Point x) {
