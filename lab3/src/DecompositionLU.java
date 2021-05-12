@@ -37,6 +37,15 @@ public class DecompositionLU {
 
     private double[][] combine() {
         double[][] A = new double[n][n];
-        return new double[0][];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i <= j) {
+                    A[i][j] = u[i][j];
+                } else {
+                    A[i][j] = l[i][j];
+                }
+            }
+        }
+        return A;
     }
 }
