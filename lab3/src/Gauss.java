@@ -11,6 +11,7 @@ public class Gauss {
     public static void main(String[] args) {
         try {
             Scanner sc = new Scanner(new File(args[0]));
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
