@@ -1,15 +1,15 @@
-import java.util.Scanner;
+import java.io.FileNotFoundException;
 
 public class LUTest {
-    private static int[] ia;
-    private static double[] di;
-    private static double[] al;
-    private static double[] au;
     private static final String name = "test/";
 
-    public static void main(String[] args) {
-        DecompositionLUprofile decomposition = new DecompositionLUprofile(ia, di, al, au, di.length);
-        decomposition.decompose();
+    public static void main(String[] args) throws FileNotFoundException {
+//        MatrixGenerator generator = new MatrixGenerator("test/");
+//        generator.printMatrix();
+        ProfileMatrix matrix = new ProfileMatrix("test/");
+        System.out.println(matrix.toString());
+        matrix.decompose();
+        System.out.println(matrix.toString());
     }
 
 }

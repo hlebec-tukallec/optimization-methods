@@ -23,7 +23,7 @@ public class MatrixGenerator {
         int diff = max - min;
         int n = random.nextInt(diff + 1);
         n += min;
-        this.n = n;
+        this.n = 3; //todo
     }
 
     private void generateMatrix() {
@@ -85,11 +85,12 @@ public class MatrixGenerator {
     }
 
     private void write() {
-        File tmp = new File(fileName + "/ia");
+        File tmp = new File(fileName + "/ia.txt");
         if (!tmp.getParentFile().mkdirs()) {
-            System.err.println("Cannot create path. Access problems");
+            System.err.println("Cannot create path. Access problems"); //TODO выбрасывается если папки уже есть
         }
-        try (BufferedWriter out = new BufferedWriter(new FileWriter(tmp, StandardCharsets.UTF_8))) {
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(tmp))) {
+            out.write(ia.length + " ");
             for (int j : ia) {
                 out.write(j + " ");
             }
@@ -97,8 +98,9 @@ public class MatrixGenerator {
             System.err.println("check ai");
         }
 
-        tmp = new File(fileName + "/di");
+        tmp = new File(fileName + "/di.txt");
         try (BufferedWriter out = new BufferedWriter(new FileWriter(tmp))) {
+            out.write(di.length + " ");
             for (int j : di) {
                 out.write(j + " ");
             }
@@ -106,8 +108,9 @@ public class MatrixGenerator {
             System.err.println("check di");
         }
 
-        tmp = new File(fileName + "/al");
+        tmp = new File(fileName + "/al.txt");
         try (BufferedWriter out = new BufferedWriter(new FileWriter(tmp))) {
+            out.write(al.length + " ");
             for (int j : al) {
                 out.write(j + " ");
             }
@@ -115,8 +118,9 @@ public class MatrixGenerator {
             System.err.println("check al");
         }
 
-        tmp = new File(fileName + "/au");
+        tmp = new File(fileName + "/au.txt");
         try (BufferedWriter out = new BufferedWriter(new FileWriter(tmp))) {
+            out.write(au.length + " ");
             for (int j : au) {
                 out.write(j + " ");
             }
