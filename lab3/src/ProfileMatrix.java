@@ -1,39 +1,47 @@
 import java.util.Scanner;
 
 public class ProfileMatrix {
-    private static int[] ia;
-    private static double[] di;
-    private static double[] al;
-    private static double[] au;
-    private final String dirName;
+    int[] ia;
+    double[] di;
+    double[] al;
+    double[] au;
 
     public ProfileMatrix(String dirName) {
-        this.dirName = dirName;
-        MatrixGenerator matrixGenerator = new MatrixGenerator(dirName);
-        matrixGenerator.printMatrix();
-        scanData();
+        scanArrayIA(dirName);
+        di = scanArrayDouble(dirName, "di");
+        al = scanArrayDouble(dirName, "al");
+        au = scanArrayDouble(dirName, "au");
     }
 
+    public double get(int i, int j) {
+        if (i == j) {
+            return di[i];
+        }
+        boolean up = false;
+        if (j > i) {
+            up = true;
+            int swap = j;
+            j = i;
+            i = swap;
+        }
 
-    private void scanData() {
-        scanIA();
-        scanArrayDouble("di", di);
-        scanArrayDouble("al", al);
-        scanArrayDouble("du", au);
+        int x = ia[i + 1] - ia[i]; // profile of i-th string
+        int y = ia[i] - 1; // position of first element of i-th string in al/au
+
+        if (j < i - x + 1) { // beginning zero
+            return 0d;
+        }
+        int pos = y + j - (i - x + 1);
+        return up ? au[pos] : al[pos];
     }
 
-    private void scanIA() {
-        Scanner scanner = new Scanner(dirName + "/ia");
-        int it = 0;
+    private void scanArrayIA(String dirName) {
+        Scanner scanner = new Scanner(dirName + "ia");
         int n = scanN(scanner);
+        int it = 0;
         ia = new int[n];
         while (scanner.hasNext()) {
-            try {
-                ia[it] = scanner.nextInt();
-            } catch (NumberFormatException e) {
-                System.out.println("ia consists integer");
-            }
-            it++;
+            ia[it++] = scanner.nextInt();
         }
     }
 
@@ -41,21 +49,15 @@ public class ProfileMatrix {
         Scanner scanner = new Scanner(dirName + file);
         int it = 0;
         int n = scanN(scanner);
-        arr = new double[n];
+        int it = 0;
+        final double[] array = new double[n];
         while (scanner.hasNext()) {
-            try {
-                arr[it] = scanner.nextDouble();
-            } catch (NumberFormatException e) {
-                System.out.println(file + " consists integer");
-            }
-            it++;
+            array[it++] = scanner.nextDouble();
         }
+        return array;
     }
 
     private int scanN(Scanner scanner) throws NumberFormatException {
-        if (scanner.hasNextInt()) {
-            return scanner.nextInt();
-        }
-        throw new NumberFormatException("The first argument - int n - expected");
+        return scanner.nextInt();
     }
 }
