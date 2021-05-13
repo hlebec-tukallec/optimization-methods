@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 public class LUTest {
     private static final String name = "test/";
@@ -8,8 +9,9 @@ public class LUTest {
 //        generator.printMatrix();
         ProfileMatrix matrix = new ProfileMatrix("test/");
         System.out.println(matrix.toString());
-        matrix.decompose();
-        System.out.println(matrix.toString());
+        matrix.decompositionUL();
+        Gauss gauss = new Gauss();
+        System.out.println(Arrays.toString(gauss.ForwardGaussBasedOnLU(matrix)));
     }
 
 }

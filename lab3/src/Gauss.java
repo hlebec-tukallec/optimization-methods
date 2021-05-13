@@ -1,23 +1,7 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class Gauss {
-    private static double[] di;
-    private static int[] ia;
-    private static double[] al;
-    private static double[] au;
-    private static double[] b;
-    public static void main(String[] args) {
-        try {
-            Scanner sc = new Scanner(new File(args[0]));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public double[] SolutionGauss(ProfileMatrix matrix) {
+    public double[] ForwardGaussBasedOnLU(ProfileMatrix matrix) {
         int n = matrix.di.length;
         double[] y = new double[n];
         for (int i = 0; i < n; i++) {
@@ -25,7 +9,7 @@ public class Gauss {
             for (int j = 0; j < i; j++) {
                 cur += matrix.get(i, j) * y[j];
             }
-            y[i] = b[i] - cur;
+            y[i] = matrix.b[i] - cur;
         }
 
         for (int i = n - 1; i >= 0; i--) {
@@ -33,25 +17,61 @@ public class Gauss {
             for (int j = n - 1; j > i; j--) {
                 cur += matrix.get(i, j) * y[j];
             }
-            y[i] = (b[i] - cur) / matrix.get(i, i);
+            y[i] = (y[i] - cur) / matrix.get(i, i);
         }
 
         return y;
     }
 
-    // 0 - index
-    private double get(int i, int j) {
-        if (i == j) {
-            return di[i];
+    //todo запоминать перестановку строчек(массив - какая строка отвечает за i)
+    //todo что возвращать на бесконечное количество решений и на никакое
+    public double[] GaussWithPivotElement(double[][] a) {
+        int n = a.length;
+        int m = n - 1;
+
+        int[] where = new int[m];
+        Arrays.fill(where, -1);
+        for (int col = 0, row = 0; col < m && row < n; ++col) {
+            int sel = row;
+            for (int i = row; i < n; ++i)
+                if (Math.abs(a[i][col]) > Math.abs(a[sel][col]))
+                    sel = i;
+            if (Math.abs(a[sel][col]) < 0.00001)
+                continue;
+            for (int i = col; i <= m; ++i) {
+                double tmp = a[sel][i];
+                a[sel][i] = a[row][i];
+                a[row][i] = tmp;
+            }
+            where[col] = row;
+
+            for (int i = 0; i < n; ++i)
+                if (i != row) {
+                    double c = a[i][col] / a[row][col];
+                    for (int j = col; j <= m; ++j)
+                        a[i][j] -= a[row][j] * c;
+                }
+            ++row;
         }
-        int x = ia[i + 1] - ia[i]; // profile of i-th string
-        int y = ia[i] - 1; // position of first element of i-th string in al/au
-        if (((j < i) && (j < i - x + 1)) || // beginning zero
-            ((j > i) && (j > i + x))) { // ending zeros
-                return 0d;
+
+        double[] ans = new double[m];
+        for (int i = 0; i < m; ++i)
+            if (where[i] != -1)
+                ans[i] = a[where[i]][m] / a[where[i]][i];
+        for (int i = 0; i < n; ++i) {
+            double sum = 0;
+            for (int j = 0; j < m; ++j)
+                sum += ans[j] * a[i][j];
+            if (Math.abs(sum - a[i][m]) > 0.000001)
+                return ans;
         }
-        int pos = y + j - (i - x + 1);
-        return j < i ? al[pos] : au[pos];
+
+        for (int i = 0; i < m; ++i)
+            if (where[i] == -1)
+                return ans;
+        return ans;
     }
+
+
 }
 

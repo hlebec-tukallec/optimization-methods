@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -68,7 +67,8 @@ public class ProfileMatrix {
         }
     }
 
-    public void decompose() {
+    //todo разложение не всегда есть, это надо обработать
+    public void decompositionUL() {
         int n = di.length;
 
         double u00 = get(0, 0);

@@ -6,11 +6,13 @@ public class MatrixGenerator {
     int n;
     String fileName;
     Random random = new Random();
-    int[][] matrix;
-    int[] di; //диагональ, размер н, double?
-    int[] al; //элементы нижнего треугольника (L) (по строкам) double?
-    int[] au; //элементы нижнего треугольника (U) (по столбцам) double?
+    double[][] matrix;
     int[] ia; //информация о профиле  от первого не нулевого до диагонального не включая диагональный
+    double[] di; //диагональ, размер n
+    double[] al; //элементы нижнего треугольника (L) (по строкам) double?
+    double[] au; //элементы нижнего треугольника (U) (по столбцам) double?
+    double[] b; //вектор правой части
+
 
     public MatrixGenerator(String name) {
         this.fileName = name;
@@ -23,31 +25,33 @@ public class MatrixGenerator {
         int diff = max - min;
         int n = random.nextInt(diff + 1);
         n += min;
-        this.n = 3; //todo
+        this.n = n;
     }
 
     private void generateMatrix() {
-        this.matrix = new int[n][n];
-        this.di = new int[n];
+        this.matrix = new double[n][n];
+        this.b = new double[n];
+        this.di = new double[n];
         int diff = 1000;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 boolean sign = random.nextBoolean();
                 if (!sign) {
-                    this.matrix[i][j] = random.nextInt(diff + 1) * -1;
+                    this.matrix[i][j] = random.nextDouble() * random.nextInt(diff + 1) * -1;
                 } else {
-                    this.matrix[i][j] = random.nextInt(diff + 1);
+                    this.matrix[i][j] = random.nextDouble() * random.nextInt(diff + 1);
                 }
                 if (i == j) {
                     this.di[i] = matrix[i][j];
                 }
             }
+            b[i] = random.nextDouble();
         }
     }
 
     //для тестов руками
     private void readMatrix() {
-        this.matrix = new int[][]{{1, 3, 4, 0},
+        this.matrix = new double[][]{{1, 3, 4, 0},
                 {0, 5, 7, 6},
                 {0, 1, 4, 3},
                 {0, 0, 4, 6}};
@@ -55,8 +59,8 @@ public class MatrixGenerator {
     }
 
     private void countLU() {
-        this.al = new int[ia[n] - 1];
-        this.au = new int[ia[n] - 1];
+        this.al = new double[ia[n] - 1];
+        this.au = new double[ia[n] - 1];
 
         int pos = 0;
         for (int i = 0; i < n; i++) {
@@ -101,7 +105,7 @@ public class MatrixGenerator {
         tmp = new File(fileName + "/di.txt");
         try (BufferedWriter out = new BufferedWriter(new FileWriter(tmp))) {
             out.write(di.length + " ");
-            for (int j : di) {
+            for (double j : di) {
                 out.write(j + " ");
             }
         } catch (IOException e) {
@@ -111,7 +115,7 @@ public class MatrixGenerator {
         tmp = new File(fileName + "/al.txt");
         try (BufferedWriter out = new BufferedWriter(new FileWriter(tmp))) {
             out.write(al.length + " ");
-            for (int j : al) {
+            for (double j : al) {
                 out.write(j + " ");
             }
         } catch (IOException e) {
@@ -121,11 +125,21 @@ public class MatrixGenerator {
         tmp = new File(fileName + "/au.txt");
         try (BufferedWriter out = new BufferedWriter(new FileWriter(tmp))) {
             out.write(au.length + " ");
-            for (int j : au) {
+            for (double j : au) {
                 out.write(j + " ");
             }
         } catch (IOException e) {
             System.err.println("check au");
+        }
+
+        tmp = new File(fileName + "/b.txt");
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(tmp))) {
+            out.write(b.length + " ");
+            for (double j : b) {
+                out.write(j + " ");
+            }
+        } catch (IOException e) {
+            System.err.println("check b");
         }
     }
 
