@@ -1,5 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,7 +11,7 @@ public class ProfileMatrix {
     double[] au;
     double[] b;
 
-    public ProfileMatrix(String dirName) throws FileNotFoundException {
+    public ProfileMatrix(String dirName) throws IOException {
         scanArrayIA(dirName);
         di = scanArrayDouble(dirName, "di");
         al = scanArrayDouble(dirName, "al");
@@ -97,29 +98,14 @@ public class ProfileMatrix {
 
     }
 
-    private void scanArrayIA(String dirName) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(dirName + "ia.txt"));
-            int n = scanN(scanner);
-            int it = 0;
-            ia = new int[n];
-            while (scanner.hasNext()) {
-                ia[it++] = scanner.nextInt();
-            }
+    private void scanArrayIA(String dirName) throws IOException {
+        BufferedReader reader = Files.newBufferedReader(Path.of(dirName + "ia.txt"));
+        ia = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
     }
 
-    private double[] scanArrayDouble(String dirName, String fileName) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(dirName + fileName + ".txt"));
-        int it = 0;
-        int n = scanN(scanner);
-        final double[] array = new double[n];
-        while (scanner.hasNext()) {
-            array[it++] = scanner.nextDouble();
-        }
-        return array;
-    }
-
-    private int scanN(Scanner scanner) {
-        return scanner.nextInt();
+    private double[] scanArrayDouble(String dirName, String fileName) throws IOException {
+        BufferedReader reader = Files.newBufferedReader(Path.of(dirName + fileName + ".txt"));
+        return Arrays.stream(reader.readLine().split(" ")).mapToDouble(Double::parseDouble).toArray();
     }
 
     @Override
