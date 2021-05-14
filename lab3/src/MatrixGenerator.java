@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 public class MatrixGenerator {
     private int n;
@@ -74,12 +75,15 @@ public class MatrixGenerator {
     }
 
     //для тестов руками
-    private void readMatrix() {
-        matrix = new double[][]{{1, 3, 4, 0},
-                {0, 5, 7, 6},
-                {0, 1, 4, 3},
-                {0, 0, 4, 6}};
+    public void readMatrix(double[][] matrix) {
         n = matrix.length;
+        this.matrix = matrix;
+        di = new double[n];
+        b = new double[n];
+        for (int i = 0; i < n; i++) {
+            di[i] = matrix[i][i];
+            b[i] = i + 1;
+        }
     }
 
     private void countLU() {
@@ -113,12 +117,12 @@ public class MatrixGenerator {
     }
 
     private void write() {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
+//        for (int i = 0; i < n; i++) {
+//            for (int j = 0; j < n; j++) {
+//                System.out.print(matrix[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
         Path dir = Path.of(dirName);
         if (!Files.exists(dir)) {
             try {
@@ -157,8 +161,8 @@ public class MatrixGenerator {
     }
 
     public void printMatrix() {
-        generateN();
-        generateMatrix();
+//        generateN();
+//        generateMatrix();
         //readMatrix();
         countProfile();
         countLU();
