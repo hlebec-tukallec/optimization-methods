@@ -8,12 +8,14 @@ public class ProfileMatrix {
     double[] di;
     double[] al;
     double[] au;
+    double[] b;
 
     public ProfileMatrix(String dirName) throws FileNotFoundException {
         scanArrayIA(dirName);
         di = scanArrayDouble(dirName, "di");
         al = scanArrayDouble(dirName, "al");
         au = scanArrayDouble(dirName, "au");
+        b = scanArrayDouble(dirName, "b");
     }
 
     public double get(int i, int j) {
