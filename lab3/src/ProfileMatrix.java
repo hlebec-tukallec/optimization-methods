@@ -70,7 +70,6 @@ public class ProfileMatrix {
         }
     }
 
-    //todo разложение не всегда есть, это надо обработать
     public void decompositionUL() {
         int n = di.length;
 

@@ -29,35 +29,47 @@ public class MatrixGenerator {
         int n = random.nextInt(diff + 1);
         n += min;
 //        this.n = n;
-        this.n = 3;
+        this.n = 4;
     }
 
     private void generateMatrix() {
         matrix = new double[n][n];
         b = new double[n];
         di = new double[n];
-        int diff = 10;
-        for (int i = 0; i < n; i++) {
+        int diff = 11;
+        matrix[0][0] = di[0] = random.nextDouble() * random.nextInt(diff);
+        for (int i = 1; i < n; i++) {
             int posOfFirstNotZero = random.nextInt(i);
-            for (int j = posOfFirstNotZero; j < i; j++) {
-                int next = random.nextInt(3);
-                switch (next) {
-                    case 1 -> matrix[i][j] = -1 * random.nextDouble() * (random.nextInt(diff + 1) + 1);
-                    case 2 -> matrix[i][j] = random.nextDouble() * (random.nextInt(diff + 1) + 1);
-                    default -> {
-                        matrix[i][j] = 0;
-                        matrix[j][i] = 0;
-                        continue;
-                    }
-                }
-                next = random.nextInt(2) + 1;
-                switch (next) {
-                    case 1 -> matrix[i][j] = -1 * random.nextDouble() * (random.nextInt(diff + 1) + 1);
-                    case 2 -> matrix[i][j] = random.nextDouble() * (random.nextInt(diff + 1) + 1);
-                }
+            generateFirstNotZero(diff, posOfFirstNotZero, i);
+            generateFirstNotZero(diff, i, posOfFirstNotZero);
+
+            for (int j = posOfFirstNotZero + 1; j < i; j++) {
+                generateProfile(diff, i, j);
+                generateProfile(diff, j, i);
             }
-            di[i] = matrix[i][i];
-            b[i] = random.nextDouble() * random.nextInt(diff + 1);
+            matrix[i][i] = di[i] = random.nextDouble() * random.nextInt(diff);
+            b[i] = random.nextDouble() * random.nextInt(diff);
+        }
+    }
+
+    private void generateFirstNotZero(final int diff, final int i, final int posOfFirstNotZero) {
+        matrix[posOfFirstNotZero][i] = randomNotZeroDouble() * (random.nextInt(diff) + 1);
+        if (random.nextBoolean()) {
+            matrix[posOfFirstNotZero][i] = -matrix[posOfFirstNotZero][i];
+        }
+    }
+
+    private double randomNotZeroDouble() {
+        return random.nextDouble() + 0.000001;
+    }
+
+    private void generateProfile(final int diff, final int i, final int j) {
+        int next = random.nextInt(3);
+        double d = randomNotZeroDouble() * (random.nextInt(diff) + 1);
+        switch (next) {
+            case 1 -> matrix[i][j] = -d;
+            case 2 -> matrix[i][j] = d;
+            default -> matrix[i][j] = 0;
         }
     }
 
