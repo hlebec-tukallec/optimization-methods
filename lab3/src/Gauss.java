@@ -3,24 +3,23 @@ import java.util.Arrays;
 public class Gauss {
     public double[] ForwardGaussBasedOnLU(ProfileMatrix matrix) {
         int n = matrix.getN();
-        double[] y = new double[n];
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i < n; i++) {
             double cur = 0;
             for (int j = 0; j < i; j++) {
-                cur += matrix.get(i, j) * y[j];
+                cur += matrix.get(i, j) * matrix.getB()[j];
             }
-            y[i] = matrix.getB(i) - cur;
+            matrix.getB()[i] = matrix.getB(i) - cur;
         }
 
         for (int i = n - 1; i >= 0; i--) {
             double cur = 0;
             for (int j = n - 1; j > i; j--) {
-                cur += matrix.get(i, j) * y[j];
+                cur += matrix.get(i, j) * matrix.getB(j);
             }
-            y[i] = (y[i] - cur) / matrix.get(i, i);
+            matrix.getB()[i] = (matrix.getB(i) - cur) / matrix.get(i, i);
         }
 
-        return y;
+        return matrix.getB();
     }
 
     public double[] GaussWithPivotElement(double[][] a) {

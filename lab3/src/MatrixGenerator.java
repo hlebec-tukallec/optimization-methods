@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Random;
 
 public class MatrixGenerator {
@@ -29,6 +30,41 @@ public class MatrixGenerator {
         di = countDI();
         ia = countProfile();
         b = generateB();
+
+        al = new double[ia[n] - 1];
+        au = new double[ia[n] - 1];
+        int pos = 0;
+        for (int i = 0; i < n; i++) {
+            int cnt = ia[i + 1] - ia[i];
+            for (int j = i - cnt; j < i; j++) {
+                al[pos] = matrix[i][j];
+                au[pos] = matrix[j][i];
+                pos++;
+            }
+        }
+
+        write();
+    }
+
+    // генерирует матрицу и записывает ее в профильном формате в директорию dir
+    public MatrixGenerator(String dir, int n, int k) {
+        dirName = dir + File.separator;
+
+        this.n = n;
+        matrix = generateMatrix();
+        di = new double[n];
+        for (int i = 0; i < n; i++) {
+            int diag = 0;
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
+                    continue;
+                }
+                diag += matrix[i][j];
+            }
+            di[i] = -diag + (i == 0 ? Math.pow(10, -k) : 0);
+        }
+        ia = countProfile();
+        b = generateBFromOneToN();
 
         al = new double[ia[n] - 1];
         au = new double[ia[n] - 1];
@@ -92,7 +128,13 @@ public class MatrixGenerator {
         double[] b = new double[n];
         for (int i = 0; i < n; i++) {
             for (int j = 1; j <= n; j++) {
-                b[i] += matrix[i][j - 1] * j;
+                double cur;
+                if (i == j - 1) {
+                    cur = di[i];
+                } else {
+                    cur = matrix[i][j - 1];
+                }
+                b[i] += cur * j;
             }
         }
         return b;
@@ -125,15 +167,19 @@ public class MatrixGenerator {
 
     private double[][] generateMatrix() {
         double[][] matrix = new double[n][n];
-        matrix[0][0] = random.nextDouble() * random.nextInt(diff);
         for (int i = 1; i < n; i++) {
             int posOfFirstNotZero = random.nextInt(i);
-            generateFirstNotZero(posOfFirstNotZero, i);
-            generateFirstNotZero(i, posOfFirstNotZero);
+
+            matrix[i][posOfFirstNotZero] = 0;
+            matrix[posOfFirstNotZero][i] = 0;
+            while (matrix[i][posOfFirstNotZero] == 0 || matrix[posOfFirstNotZero][i] == 0) {
+                matrix[i][posOfFirstNotZero] = -random.nextInt(5);
+                matrix[posOfFirstNotZero][i] = -random.nextInt(5);
+            }
 
             for (int j = posOfFirstNotZero + 1; j <= i; j++) {
-                generateProfile(i, j);
-                generateProfile(j, i);
+                matrix[i][j] = -random.nextInt(5);
+                matrix[j][i] = -random.nextInt(5);
             }
         }
         return matrix;

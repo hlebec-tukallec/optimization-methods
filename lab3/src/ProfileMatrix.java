@@ -94,10 +94,12 @@ public class ProfileMatrix {
             set(j, 0, get(j, 0) / u00);
         }
         for (int i = 1; i < n; i++) {
-            for (int j = 0; j < i; j++) {
+            for (int j = i; j < n; j++) {
                 double sum = 0;
-                for (int k = 0; k < j; k++) {
-                    sum += get(i, k) * get(k, j);
+                for (int k = 0; k < i; k++) {
+                    double add;
+                    add = get(i, k);
+                    sum += add * get(k, j);
                 }
                 set(i, j, get(i, j) - sum);
             }
@@ -108,10 +110,6 @@ public class ProfileMatrix {
                     sum += get(j, k) * get(k, i);
                 }
                 double cur = get(i, i);
-                if (cur < 0.00001) {
-                    System.out.println("No LU decomposition");
-                    return;
-                }
                 set(j, i, (get(j, i) - sum) / cur);
             }
         }
@@ -131,11 +129,13 @@ public class ProfileMatrix {
     @Override
     public String
     toString() {
-        return "ProfileMatrix{" +
-                "ia=" + Arrays.toString(ia) +
-                ", di=" + Arrays.toString(di) +
-                ", al=" + Arrays.toString(al) +
-                ", au=" + Arrays.toString(au) +
-                '}';
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < di.length; i++) {
+            for (int j = 0; j < di.length; j++) {
+                str.append(String.format("%.5f",get(i, j))).append(" ");
+            }
+            str.append('\n');
+        }
+        return str.toString();
     }
 }
