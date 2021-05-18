@@ -4,18 +4,23 @@ import java.nio.file.Path;
 import java.util.Arrays;
 
 public class ProfileMatrix {
-    int[] ia;
-    double[] di;
-    double[] al;
-    double[] au;
-    double[] b;
+    private int[] ia;
+    private double[] di;
+    private double[] al;
+    private double[] au;
+    private double[] b;
 
-    public ProfileMatrix(String dirName) throws IOException {
-        scanArrayIA(dirName);
-        di = scanArrayDouble(dirName, "di");
-        al = scanArrayDouble(dirName, "al");
-        au = scanArrayDouble(dirName, "au");
-        b = scanArrayDouble(dirName, "b");
+    public ProfileMatrix(String dirName) {
+        try {
+            dirName = dirName + File.separator;
+            scanArrayIA(dirName);
+            di = scanArrayDouble(dirName, "di");
+            al = scanArrayDouble(dirName, "al");
+            au = scanArrayDouble(dirName, "au");
+            b = scanArrayDouble(dirName, "b");
+        } catch (IOException e) {
+            System.err.println("IO Exception while reading input data: " + e.getMessage());
+        }
     }
 
     public double get(int i, int j) {
@@ -39,6 +44,18 @@ public class ProfileMatrix {
         }
         int pos = y + j - realPos;
         return up ? au[pos] : al[pos];
+    }
+
+    public double getB(final int i) {
+        return b[i];
+    }
+
+    public double[] getB() {
+        return b;
+    }
+
+    public int getN() {
+        return di.length;
     }
 
     public void set(int i, int j, double value) {
@@ -77,9 +94,9 @@ public class ProfileMatrix {
             set(j, 0, get(j, 0) / u00);
         }
         for (int i = 1; i < n; i++) {
-            for (int j = i; j < n; j++) {
+            for (int j = 0; j < i; j++) {
                 double sum = 0;
-                for (int k = 0; k < i; k++) {
+                for (int k = 0; k < j; k++) {
                     sum += get(i, k) * get(k, j);
                 }
                 set(i, j, get(i, j) - sum);
@@ -90,7 +107,12 @@ public class ProfileMatrix {
                 for (int k = 0; k < i; k++) {
                     sum += get(j, k) * get(k, i);
                 }
-                set(j, i, (get(j, i) - sum) / get(i, i));
+                double cur = get(i, i);
+                if (cur < 0.00001) {
+                    System.out.println("No LU decomposition");
+                    return;
+                }
+                set(j, i, (get(j, i) - sum) / cur);
             }
         }
 

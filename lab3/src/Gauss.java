@@ -2,14 +2,14 @@ import java.util.Arrays;
 
 public class Gauss {
     public double[] ForwardGaussBasedOnLU(ProfileMatrix matrix) {
-        int n = matrix.di.length;
+        int n = matrix.getN();
         double[] y = new double[n];
         for (int i = 0; i < n; i++) {
             double cur = 0;
             for (int j = 0; j < i; j++) {
                 cur += matrix.get(i, j) * y[j];
             }
-            y[i] = matrix.b[i] - cur;
+            y[i] = matrix.getB(i) - cur;
         }
 
         for (int i = n - 1; i >= 0; i--) {
@@ -23,8 +23,6 @@ public class Gauss {
         return y;
     }
 
-    //todo запоминать перестановку строчек(массив - какая строка отвечает за i)
-    //todo что возвращать на бесконечное количество решений и на никакое
     public double[] GaussWithPivotElement(double[][] a) {
         int n = a.length;
         int m = n - 1;

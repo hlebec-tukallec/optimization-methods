@@ -1,8 +1,9 @@
 import java.util.Arrays;
 
+//not need
 public class DecompositionLU {
-    private double[][] l;
-    private double[][] u;
+    private final double[][] l;
+    private final double[][] u;
     private final int n;
 
     public DecompositionLU(int n, double[][] A) {
