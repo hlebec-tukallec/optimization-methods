@@ -46,12 +46,13 @@ public class MatrixGenerator {
         write();
     }
 
-    // генерирует матрицу и записывает ее в профильном формате в директорию dir
+    // генерирует матрицу, число обусловленности которых регулируется за счёт изменения диагонального преобладания
+    // так, чтобы решением являлся вектор [1, 2 ... n]
     public MatrixGenerator(String dir, int n, int k) {
         dirName = dir + File.separator;
 
         this.n = n;
-        matrix = generateMatrix();
+        matrix = generateDiagonallyDominantMatrix();
         di = new double[n];
         for (int i = 0; i < n; i++) {
             int diag = 0;
@@ -63,6 +64,31 @@ public class MatrixGenerator {
             }
             di[i] = -diag + (i == 0 ? Math.pow(10, -k) : 0);
         }
+        ia = countProfile();
+        b = generateBFromOneToN();
+
+        al = new double[ia[n] - 1];
+        au = new double[ia[n] - 1];
+        int pos = 0;
+        for (int i = 0; i < n; i++) {
+            int cnt = ia[i + 1] - ia[i];
+            for (int j = i - cnt; j < i; j++) {
+                al[pos] = matrix[i][j];
+                au[pos] = matrix[j][i];
+                pos++;
+            }
+        }
+
+        write();
+    }
+
+    // генерирует матрицу Гильберта так, чтобы решением являлся вектор [1, 2 ... n]
+    public MatrixGenerator(String dir, int n) {
+        dirName = dir + File.separator;
+
+        this.n = n;
+        matrix = generateGilbertMatrix();
+        di = countDI();
         ia = countProfile();
         b = generateBFromOneToN();
 
@@ -167,6 +193,22 @@ public class MatrixGenerator {
 
     private double[][] generateMatrix() {
         double[][] matrix = new double[n][n];
+        matrix[0][0] = di[0] = random.nextDouble() * random.nextInt(diff);
+        for (int i = 1; i < n; i++) {
+            int posOfFirstNotZero = random.nextInt(i);
+            generateFirstNotZero(posOfFirstNotZero, i);
+            generateFirstNotZero(i, posOfFirstNotZero);
+
+            for (int j = posOfFirstNotZero + 1; j <= i; j++) {
+                generateProfile(i, j);
+                generateProfile(j, i);
+            }
+        }
+        return matrix;
+    }
+
+    private double[][] generateDiagonallyDominantMatrix() {
+        double[][] matrix = new double[n][n];
         for (int i = 1; i < n; i++) {
             int posOfFirstNotZero = random.nextInt(i);
 
@@ -180,6 +222,17 @@ public class MatrixGenerator {
             for (int j = posOfFirstNotZero + 1; j <= i; j++) {
                 matrix[i][j] = -random.nextInt(5);
                 matrix[j][i] = -random.nextInt(5);
+            }
+        }
+        return matrix;
+    }
+
+    private double[][] generateGilbertMatrix() {
+        double[][] matrix = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                double del = (i + j + 1);
+                matrix[i][j] = matrix[j][i] = 1 / del;
             }
         }
         return matrix;

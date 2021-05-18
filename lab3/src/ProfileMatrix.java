@@ -23,7 +23,7 @@ public class ProfileMatrix {
         }
     }
 
-    public double get(int i, int j) {
+    public double getFromLU(int i, int j) {
         if (i == j) {
             return di[i];
         }
@@ -46,19 +46,19 @@ public class ProfileMatrix {
         return up ? au[pos] : al[pos];
     }
 
-    public double getB(final int i) {
+    public double getFromB(final int i) {
         return b[i];
     }
 
-    public double[] getB() {
-        return b;
+    public void setInB(final int i, final double set) {
+        b[i] = set;
     }
 
     public int getN() {
         return di.length;
     }
 
-    public void set(int i, int j, double value) {
+    public void setInLU(int i, int j, double value) {
         if (i == j) {
             di[i] = value;
             return;
@@ -86,31 +86,35 @@ public class ProfileMatrix {
         }
     }
 
+    public double[] getB() {
+        return b;
+    }
+
     public void decompositionUL() {
         int n = di.length;
 
-        double u00 = get(0, 0);
+        double u00 = getFromLU(0, 0);
         for (int j = 1; j < n; j++) {
-            set(j, 0, get(j, 0) / u00);
+            setInLU(j, 0, getFromLU(j, 0) / u00);
         }
         for (int i = 1; i < n; i++) {
             for (int j = i; j < n; j++) {
                 double sum = 0;
                 for (int k = 0; k < i; k++) {
                     double add;
-                    add = get(i, k);
-                    sum += add * get(k, j);
+                    add = getFromLU(i, k);
+                    sum += add * getFromLU(k, j);
                 }
-                set(i, j, get(i, j) - sum);
+                setInLU(i, j, getFromLU(i, j) - sum);
             }
 
             for (int j = i + 1; j < n; j++) {
                 double sum = 0;
                 for (int k = 0; k < i; k++) {
-                    sum += get(j, k) * get(k, i);
+                    sum += getFromLU(j, k) * getFromLU(k, i);
                 }
-                double cur = get(i, i);
-                set(j, i, (get(j, i) - sum) / cur);
+                double cur = getFromLU(i, i);
+                setInLU(j, i, (getFromLU(j, i) - sum) / cur);
             }
         }
 
@@ -132,7 +136,7 @@ public class ProfileMatrix {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < di.length; i++) {
             for (int j = 0; j < di.length; j++) {
-                str.append(String.format("%.5f",get(i, j))).append(" ");
+                str.append(String.format("%.5f", getFromLU(i, j))).append(" ");
             }
             str.append('\n');
         }

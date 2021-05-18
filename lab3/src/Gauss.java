@@ -1,24 +1,24 @@
 import java.util.Arrays;
 
 public class Gauss {
+    // Решение хранится в векторе b (правая часть)
     public double[] ForwardGaussBasedOnLU(ProfileMatrix matrix) {
         int n = matrix.getN();
         for (int i = 1; i < n; i++) {
             double cur = 0;
             for (int j = 0; j < i; j++) {
-                cur += matrix.get(i, j) * matrix.getB()[j];
+                cur += matrix.getFromLU(i, j) * matrix.getFromB(j);
             }
-            matrix.getB()[i] = matrix.getB(i) - cur;
+            matrix.setInB(i, matrix.getFromB(i) - cur);
         }
 
         for (int i = n - 1; i >= 0; i--) {
             double cur = 0;
             for (int j = n - 1; j > i; j--) {
-                cur += matrix.get(i, j) * matrix.getB(j);
+                cur += matrix.getFromLU(i, j) * matrix.getFromB(j);
             }
-            matrix.getB()[i] = (matrix.getB(i) - cur) / matrix.get(i, i);
+            matrix.setInB(i, (matrix.getFromB(i) - cur) / matrix.getFromLU(i, i));
         }
-
         return matrix.getB();
     }
 
@@ -68,7 +68,5 @@ public class Gauss {
                 return ans;
         return ans;
     }
-
-
 }
 
