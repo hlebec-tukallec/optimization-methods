@@ -23,39 +23,41 @@ public class Gauss {
     }
 
     public double[] GaussWithPivotElement(double[][] a) {
-        int n = a.length;
-        int m = n - 1;
+        int m = a.length + 1;
+        int n = m - 1;
 
-        int[] where = new int[m];
-        Arrays.fill(where, -1);
-        for (int col = 0, row = 0; col < m && row < n; ++col) {
-            int sel = row;
-            for (int i = row; i < n; ++i)
-                if (Math.abs(a[i][col]) > Math.abs(a[sel][col]))
-                    sel = i;
-            if (Math.abs(a[sel][col]) < 0.00001)
-                continue;
-            for (int i = col; i <= m; ++i) {
-                double tmp = a[sel][i];
-                a[sel][i] = a[row][i];
-                a[row][i] = tmp;
-            }
-            where[col] = row;
-
-            for (int i = 0; i < n; ++i)
-                if (i != row) {
-                    double c = a[i][col] / a[row][col];
-                    for (int j = col; j <= m; ++j)
-                        a[i][j] -= a[row][j] * c;
-                }
-            ++row;
+        int[] realRows = new int[n];
+        for (int i = 0; i < n; i++) {
+            realRows[i] = i;
         }
 
-        double[] ans = new double[m];
-        for (int i = 0; i < m; ++i)
-            if (where[i] != -1)
-                ans[i] = a[where[i]][m] / a[where[i]][i];
-        for (int i = 0; i < n; ++i) {
+        for (int row = 0; row < n; row++) {
+            int sel = row;
+            for (int i = row + 1; i < n; i++) {
+                if (Math.abs(a[realRows[i]][row]) > Math.abs(a[realRows[sel]][row])) {
+                    sel = i;
+                }
+            }
+            int tmp = realRows[sel];
+            realRows[sel] = realRows[row];
+            realRows[row] = tmp;
+
+            for (int i = row + 1; i < n; ++i) {
+                double c = a[realRows[i]][row] / a[realRows[row]][row];
+                for (int j = row; j < m; ++j) {
+                    a[realRows[i]][j] -= a[realRows[row]][j] * c;
+                }
+            }
+        }
+
+        /*for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                System.out.print(a[realRows[i]][j] + " ");
+            }
+            System.out.println();
+        }*/
+        double[] ans = new double[n];
+        for (int i = n - 1; i >= 0; i--) {
             double sum = 0;
             for (int j = 0; j < m; ++j)
                 sum += ans[j] * a[i][j];

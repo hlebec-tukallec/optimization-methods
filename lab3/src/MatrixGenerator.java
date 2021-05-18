@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Random;
 
 public class MatrixGenerator {
@@ -107,15 +106,21 @@ public class MatrixGenerator {
         write();
     }
 
-    // записывает данную матрицу в профильном формате в директорию dir,
+    // записывает данную плотную матрицу в профильном формате в директорию dir,
     public MatrixGenerator(String dir, double[][] m) {
         dirName = dir + File.separator;
 
         n = m.length;
-        matrix = m;
+        matrix = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            System.arraycopy(m[i], 0, matrix[i], 0, n);
+        }
         di = countDI();
         ia = countProfile();
-        b = generateBFromOneToN();
+        b = new double[n];
+        for (int i = 0; i < n; i++) {
+            b[i] = m[i][n];
+        }
 
         al = new double[ia[n] - 1];
         au = new double[ia[n] - 1];
