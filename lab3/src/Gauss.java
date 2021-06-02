@@ -49,13 +49,6 @@ public class Gauss {
                 }
             }
         }
-
-        /*for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                System.out.print(a[realRows[i]][j] + " ");
-            }
-            System.out.println();
-        }*/
         double[] ans = new double[n];
         for (int i = n - 1; i >= 0; i--) {
             double sum = 0;
