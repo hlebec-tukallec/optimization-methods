@@ -1,14 +1,14 @@
 import java.util.function.Function;
 
-public class Source {
+public class MySource {
     private int mod = 1;
     private Data[] data;
 
-    public Source() {
+    public MySource() {
         initialise();
     }
 
-    public Source(int mod) {
+    public MySource(int mod) {
         this.mod = mod;
     }
 
