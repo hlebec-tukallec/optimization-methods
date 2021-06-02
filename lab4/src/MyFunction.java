@@ -1,39 +1,40 @@
 import java.util.function.Function;
 
 public class MyFunction {
-    private final Function<Point, Double> f;
-    private final Function<Point, Double[]> gradientF;
-    private final Function<Point, Double[][]> hessianF;
+    private final Function<MyPoint, Double> f;
+    private final Function<MyPoint, Double[]> gradientF;
+    private final Function<MyPoint, Double[][]> hessianF;
 
-    public MyFunction(final Function<Point, Double> f,
-                      final Function<Point, Double[]> gradientF,
-                      final Function<Point, Double[][]> hessianF) {
+    public MyFunction(Function<MyPoint, Double> f,
+                      Function<MyPoint, Double[]> gradientF,
+                      Function<MyPoint, Double[][]> hessianF) {
         this.f = f;
         this.gradientF = gradientF;
         this.hessianF = hessianF;
     }
 
-    public Function<Point, Double> getF() {
+
+    public Function<MyPoint, Double> getF() {
         return f;
     }
 
-    public Function<Point, Double[]> getGradientF() {
+    public Function<MyPoint, Double[]> getGradientF() {
         return gradientF;
     }
 
-    public Function<Point, Double[][]> getHessianF() {
+    public Function<MyPoint, Double[][]> getHessianF() {
         return hessianF;
     }
 
-    public Double getFValue(Point x) {
+    public Double getFValue(MyPoint x) {
         return f.apply(x);
     }
 
-    public Double[] getGradientValue(Point x) {
+    public Double[] getGradientValue(MyPoint x) {
         return gradientF.apply(x);
     }
 
-    public Double[][] getHessianValue(Point x) {
+    public Double[][] getHessianValue(MyPoint x) {
         return hessianF.apply(x);
     }
 }

@@ -1,12 +1,12 @@
 import java.util.Arrays;
 
-public class Point {
+public class MyPoint {
     public final double[] coordinates;
 
-    public Point(double[] coordinates) {
+    public MyPoint(double[] coordinates) {
         this.coordinates = coordinates;
     }
-    public Point(Point p) {
+    public MyPoint(MyPoint p) {
         int n = p.coordinates.length;
         this.coordinates = new double[n];
         System.arraycopy(p.coordinates, 0, coordinates, 0, n);
@@ -28,7 +28,7 @@ public class Point {
                 '}';
     }
 
-    public void plus(final Point y) {
+    public void plus(final MyPoint y) {
         for (int i = 0; i < y.coordinates.length; i++) {
             coordinates[i] += y.coordinates[i];
         }
