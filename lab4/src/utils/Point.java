@@ -1,25 +1,27 @@
+package utils;
+
 import java.util.Arrays;
 
-public class MyPoint {
+public class Point {
     public final double[] coordinates;
 
-    public MyPoint(double[] coordinates) {
+    public Point(double[] coordinates) {
         this.coordinates = coordinates;
     }
 
-    public MyPoint(MyPoint p) {
+    public Point(Point p) {
         int n = p.coordinates.length;
         this.coordinates = new double[n];
         System.arraycopy(p.coordinates, 0, coordinates, 0, n);
     }
 
-    public static MyPoint multiplyOnScalar(final MyPoint x, final Double l) {
+    public static Point multiplyOnScalar(final Point x, final Double l) {
         int n = x.coordinates.length;
         double[] c = new double[n];
         for (int i = 0; i < n; i++) {
             c[i] = x.coordinates[i] * l;
         }
-        return new MyPoint(c);
+        return new Point(c);
     }
 
 
@@ -38,23 +40,23 @@ public class MyPoint {
                 '}';
     }
 
-    public void plus(final MyPoint y) {
+    public void plus(final Point y) {
         for (int i = 0; i < y.coordinates.length; i++) {
             coordinates[i] += y.coordinates[i];
         }
     }
 
-    public static MyPoint plus(final MyPoint x, final MyPoint y) {
+    public static Point plus(final Point x, final Point y) {
         int n = x.coordinates.length;
         double[] c = new double[n];
         for (int i = 0; i < n; i++) {
             c[i] = x.coordinates[i] + y.coordinates[i];
         }
-        return new MyPoint(c);
+        return new Point(c);
     }
 
-    public static MyPoint negative(MyPoint x) {
-        return new MyPoint(Arrays.stream(x.coordinates)
+    public static Point negative(Point x) {
+        return new Point(Arrays.stream(x.coordinates)
                 .map(a -> -a).toArray());
     }
 }
