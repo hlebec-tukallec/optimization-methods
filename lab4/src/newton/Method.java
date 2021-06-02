@@ -1,10 +1,15 @@
+package newton;
+
+import utils.ExtendedFunction;
+import utils.Point;
+
 import java.util.Arrays;
 import java.util.function.Function;
 
 public interface Method {
-    MyPoint minimum(MySource f, MyPoint x0, double eps);
+    Point minimum(ExtendedFunction f, Point x0, double eps);
 
-    default MyPoint slay(double[][] h, double[] f) {
+    default Point slay(double[][] h, double[] f) {
         int n = f.length;
         for (int i = 0; i < n; i++) {
             f[i] = -f[i];
@@ -43,15 +48,15 @@ public interface Method {
             }
             solution[i] = (f[realRows[i]] - sum) / h[realRows[i]][i];
         }
-        return new MyPoint(solution);
+        return new Point(solution);
     }
 
-    default double norm(final MyPoint p) {
+    default double norm(final Point p) {
         return Math.sqrt(Arrays.stream(p.coordinates).map(x -> x * x).sum());
     }
 
-    default double countLambda(final MySource function, MyPoint x, MyPoint d) {
-        Function<Double, Double> f = l -> function.getFValue(MyPoint.plus(x, MyPoint.multiplyOnScalar(d, l)));
+    default double countLambda(final ExtendedFunction function, Point x, Point d) {
+        Function<Double, Double> f = l -> function.getFValue(Point.plus(x, Point.multiplyOnScalar(d, l)));
         final double PHI = 2 - (1 + Math.sqrt(5)) / 2;
         final double EPS = 0.00001;
 
@@ -78,7 +83,7 @@ public interface Method {
         return (x1 + x2) / 2;
     }
 
-    default double multiplyPoints(MyPoint x, MyPoint y) {
+    default double multiplyPoints(Point x, Point y) {
         double sum = 0;
         for (int i = 0; i < x.coordinates.length; i++) {
             sum += x.get(i)*y.get(i);
