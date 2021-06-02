@@ -1,4 +1,5 @@
 import java.util.function.Function;
+import static java.lang.Math.pow;
 
 public class MySource {
     private int mod = 1;
@@ -8,7 +9,11 @@ public class MySource {
         initialise();
     }
 
-    public MySource(int mod) {
+    public MyPoint getPoint() {
+        return data[mod].point;
+    }
+
+    public void changeMod(int mod) {
         this.mod = mod;
     }
 
@@ -24,21 +29,13 @@ public class MySource {
         return data[mod].function.getHessianValue(x);
     }
 
-    private class Data {
+    private static class Data {
         private final MyFunction function;
         private final MyPoint point;
 
         public Data(MyFunction function, MyPoint point) {
             this.function = function;
             this.point = point;
-        }
-
-        public MyFunction getFunction() {
-            return function;
-        }
-
-        public MyPoint getPoint() {
-            return point;
         }
     }
 
@@ -70,17 +67,5 @@ public class MySource {
                 new Data(new MyFunction(f2, gradF2, hesF2),
                         new MyPoint(new double[]{-1.2, 1}))
         };
-    }
-
-
-    private static double pow(final double a, final int n) {
-        if (n == 0)
-            return 1;
-        if (n % 2 == 1)
-            return pow(a, n - 1) * a;
-        else {
-            double b = pow(a, n / 2);
-            return b * b;
-        }
     }
 }
