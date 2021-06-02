@@ -52,15 +52,11 @@ public class Gauss {
         double[] ans = new double[n];
         for (int i = n - 1; i >= 0; i--) {
             double sum = 0;
-            for (int j = 0; j < m; ++j)
-                sum += ans[j] * a[i][j];
-            if (Math.abs(sum - a[i][m]) > 0.000001)
-                return ans;
+            for (int j = n - 1; j > i; j--) {
+                sum += a[realRows[i]][j] * ans[j];
+            }
+            ans[i] = (a[realRows[i]][n] - sum) / a[realRows[i]][i];
         }
-
-        for (int i = 0; i < m; ++i)
-            if (where[i] == -1)
-                return ans;
         return ans;
     }
 }
