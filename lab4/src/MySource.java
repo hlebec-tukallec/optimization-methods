@@ -12,19 +12,19 @@ public class MySource {
         this.mod = mod;
     }
 
-    public Double getFValue(MyPoint x) {
+    public double getFValue(MyPoint x) {
         return data[mod].function.getFValue(x);
     }
 
-    public Double[] getGradientValue(MyPoint x) {
+    public double[] getGradientValue(MyPoint x) {
         return data[mod].function.getGradientValue(x);
     }
 
-    public Double[][] getHessianValue(MyPoint x) {
+    public double[][] getHessianValue(MyPoint x) {
         return data[mod].function.getHessianValue(x);
     }
 
-    private static class Data {
+    private class Data {
         private final MyFunction function;
         private final MyPoint point;
 
@@ -45,28 +45,28 @@ public class MySource {
     private void initialise() {
         Function<MyPoint, Double> f = x -> (x.get(0) * x.get(0) +
                 x.get(1) * x.get(1) - 1.2 * x.get(0) * x.get(1));
-        Function<MyPoint, Double[]> gradF = x -> new Double[]{
+        Function<MyPoint, double[]> gradF = x -> new double[]{
                 (2 * x.get(0) - 1.2 * x.get(1)),
                 (2 * x.get(1) - 1.2 * x.get(0))};
-        Function<MyPoint, Double[][]> hesF = x -> new Double[][]{
-                new Double[]{2.0, -1.2},
-                new Double[]{-1.2, 2.0}
+        Function<MyPoint, double[][]> hesF = x -> new double[][]{
+                new double[]{2.0, -1.2},
+                new double[]{-1.2, 2.0}
         };
         Function<MyPoint, Double> f2 = x -> (100 * pow(x.get(0), 4) +
                 100 * pow(x.get(1), 2) - 200 * pow(x.get(0), 2) * x.get(1) +
                 pow(x.get(0), 2) - 2 * x.get(0) + 1);
-        Function<MyPoint, Double[]> gradF2 = x -> new Double[]{
+        Function<MyPoint, double[]> gradF2 = x -> new double[]{
                 400 * pow(x.get(0), 3) - 400 * x.get(0) * x.get(1) + 2 * x.get(0) - 2,
                 200 * x.get(1) - 200 * pow(x.get(0), 2)
         };
-        Function<MyPoint, Double[][]> hesF2 = x -> new Double[][]{
-                new Double[]{1200 * pow(x.get(0), 2) - 400 * x.get(1) + 2, -400 * x.get(0)},
-                new Double[]{-400 * x.get(0), 200.0}
+        Function<MyPoint, double[][]> hesF2 = x -> new double[][]{
+                new double[]{1200 * pow(x.get(0), 2) - 400 * x.get(1) + 2, -400 * x.get(0)},
+                new double[]{-400 * x.get(0), 200.0}
         };
 
         this.data = new Data[]{
                 new Data(new MyFunction(f, gradF, hesF),
-                        new MyPoint(new double[]{4, 1}))
+                        new MyPoint(new double[]{4, 1})),
                 new Data(new MyFunction(f2, gradF2, hesF2),
                         new MyPoint(new double[]{-1.2, 1}))
         };
