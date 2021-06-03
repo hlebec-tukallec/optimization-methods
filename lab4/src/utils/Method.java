@@ -60,7 +60,7 @@ public interface Method {
         final double PHI = 2 - (1 + Math.sqrt(5)) / 2;
         final double EPS = 0.00001;
 
-        double a = -10, b = 10, x1, x2, f1, f2; //todo как выбирать a и b?
+        double a = -1000, b = 1000, x1, x2, f1, f2; //todo как выбирать a и b?
         x1 = a + PHI * (b - a);
         x2 = b - PHI * (b - a);
         f1 = f.apply(x1);
@@ -89,5 +89,13 @@ public interface Method {
             sum += x.get(i)*y.get(i);
         }
         return sum;
+    }
+
+    default double[][] createE(int n) {
+        double[][] H = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            H[i][i] = 1;
+        }
+        return H;
     }
 }

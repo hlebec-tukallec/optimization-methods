@@ -35,13 +35,70 @@ public class Point {
 
     public static Point multiplyMatrixAndPoint(final double[][] m, final Point x) {
         int n = m.length;
-       double[] c = new double[n];
+        double[] c = new double[n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 c[i] += m[i][j] * x.coordinates[j];
             }
         }
         return new Point(c);
+    }
+
+    public static double[][] multiplyVectorOnVector(final double[] x, final double[] y) {
+        int n = x.length;
+        double[][] m = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                m[i][j] = x[i] * y[j];
+            }
+        }
+        return m;
+    }
+
+    public static double[][] multiplyMatrixOnScalar(final double[][] m, final double p) {
+        int n = m.length;
+        double[][] m1 = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                m1[i][j] = m[i][j] * p;
+            }
+        }
+        return m1;
+    }
+
+    public static double[][] minusMatrixes(final double[][] m1, final double[][] m2) {
+        int n = m1.length;
+        double[][] m = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                m[i][j] = m1[i][j] - m2[i][j];
+            }
+        }
+        return m;
+    }
+
+    public static double[][] multiplyMatrixOnMatrix(final double[][] m1, final double[][] m2) {
+        int n = m1.length;
+        double[][] m = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    m[i][j] += m1[i][k] * m2[k][j];
+                }
+            }
+        }
+        return m;
+    }
+
+    public static double[][] plusMatrixes(final double[][] m1, final double[][] m2) {
+        int n = m1.length;
+        double[][] m = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                m[i][j] = m1[i][j] + m2[i][j];
+            }
+        }
+        return m;
     }
 
 

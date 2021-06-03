@@ -117,9 +117,9 @@ public class Source {
         this.data = new Data[]{
                 new Data(new ExtendedFunction(f, gradF, hesF), new Point(new double[]{4, 1})),
                 new Data(new ExtendedFunction(f2, gradF2, hesF2), new Point(new double[]{-1.2, 1})),
-                new Data(new ExtendedFunction(f3, gradF3, hesF3), new Point(new double[]{0, 0})),
-                new Data(new ExtendedFunction(f4, gradF4, hesF4), new Point(new double[]{0, 0})),
-                new Data(new ExtendedFunction(f5, gradF5, hesF5), new Point(new double[]{0, 0}))
+                new Data(new ExtendedFunction(f3, gradF3, hesF3), new Point(new double[]{1, 1})),
+                new Data(new ExtendedFunction(f4, gradF4, hesF4), new Point(new double[]{1, 1, 1, 1})),
+                new Data(new ExtendedFunction(f5, gradF5, hesF5), new Point(new double[]{1, 1}))
         };
     }
 }
