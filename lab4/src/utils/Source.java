@@ -3,6 +3,7 @@ package utils;
 import java.util.function.Function;
 
 import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 public class Source {
     private int mod = 1;
@@ -90,7 +91,7 @@ public class Source {
         };
         Function<Point, double[][]> hesF4 = x -> new double[][]{
                 new double[]{120 * pow(x.get(0) - x.get(3), 2) + 2, 20, 0, -120 * pow(x.get(0) - x.get(3), 2)},
-                new double[]{20, 200 + 12 * pow((x.get(1) - 2 * x.get(2)), 2    ), -24 * pow(x.get(1) - 2 * x.get(2), 2), 0},
+                new double[]{20, 200 + 12 * pow((x.get(1) - 2 * x.get(2)), 2), -24 * pow(x.get(1) - 2 * x.get(2), 2), 0},
                 new double[]{0, -24 * pow(x.get(1) - 2 * x.get(2), 2), 10 + 48 * (x.get(1) - 2 * x.get(2)), -10},
                 new double[]{-120 * pow(x.get(0) - x.get(3), 2), 0, -10, 120 * pow(x.get(0) - x.get(3), 2) + 10}
         };
@@ -114,12 +115,35 @@ public class Source {
                                 2.0 / pow(1.0 / 4 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2))
                 }
         };
+
+        Function<Point, Double> f6 = x -> (3 * pow(x.get(0), 2) + x.get(0) * x.get(1) + 2 * pow(x.get(1), 2) - x.get(0) - 4 * x.get(1));
+        Function<Point, double[]> gradF6 = x -> new double[]{
+                (6 * x.get(0) + x.get(1) - 1),
+                (x.get(0) + 4 * x.get(1) - 4)};
+        Function<Point, double[][]> hesF6 = x -> new double[][]{
+                new double[]{6, 1},
+                new double[]{1, 4}
+        };
+
+        Function<Point, Double> f7 = x -> (-x.get(1) * sqrt(x.get(0)) + 2 * pow(x.get(1), 2) + x.get(0) - 14 * x.get(1));
+        Function<Point, double[]> gradF7 = x -> new double[]{
+                (1 - x.get(1) / (2 * sqrt(x.get(0)))),
+                (-sqrt(x.get(0)) + 4 * x.get(1) - 14)};
+        Function<Point, double[][]> hesF7 = x -> new double[][]{
+                new double[]{x.get(1) / (4 * x.get(0) * sqrt(x.get(0))), -1 / (2 * sqrt(x.get(0)))},
+                new double[]{-1 / (2 * sqrt(x.get(0))), 4}
+        };
+
         this.data = new Data[]{
                 new Data(new ExtendedFunction(f, gradF, hesF), new Point(new double[]{4, 1})),
                 new Data(new ExtendedFunction(f2, gradF2, hesF2), new Point(new double[]{-1.2, 1})),
                 new Data(new ExtendedFunction(f3, gradF3, hesF3), new Point(new double[]{1, 1})),
                 new Data(new ExtendedFunction(f4, gradF4, hesF4), new Point(new double[]{1, 1, 1, 1})),
-                new Data(new ExtendedFunction(f5, gradF5, hesF5), new Point(new double[]{1, 1}))
+                new Data(new ExtendedFunction(f5, gradF5, hesF5), new Point(new double[]{1, 1})),
+                // for 1.1: 3x^2+xy+2y^2-x-4y, min point: (0, 1)
+                new Data(new ExtendedFunction(f6, gradF6, hesF6), new Point(new double[]{1, -1})),
+                // for 1.1: -y*sqrt(x)+2*y^2+x-14y, min point: (4, 4)
+                new Data(new ExtendedFunction(f7, gradF7, hesF7), new Point(new double[]{1, -1}))
         };
     }
 }
