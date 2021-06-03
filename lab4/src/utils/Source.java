@@ -68,45 +68,37 @@ public class Source {
                 new double[]{-400 * x.get(0), 200.0}
         };
 
-        Function<MyPoint, Double> f3 = x -> (pow(pow(x.get(0), 2) + x.get(1) - 11, 2) +
+        Function<Point, Double> f3 = x -> (pow(pow(x.get(0), 2) + x.get(1) - 11, 2) +
                 pow(x.get(0) + pow(x.get(1), 2) - 7, 2));
-        Function<MyPoint, double[]> gradF3 = x -> new double[]{
+        Function<Point, double[]> gradF3 = x -> new double[]{
                 4 * (pow(x.get(1), 3) + x.get(0) * x.get(1) - 11 * x.get(0)) + 2 * (x.get(0) + pow(x.get(1), 2) - 7),
                 2 * (pow(x.get(0), 2) + x.get(1) - 11) + 4 * (x.get(0) * x.get(1) + pow(x.get(1), 3) - 7 * x.get(1))
         };
-        Function<MyPoint, double[][]> hesF3 = x -> new double[][]{
+        Function<Point, double[][]> hesF3 = x -> new double[][]{
                 new double[]{12 * pow(x.get(0), 2) + 4 * x.get(1) - 42, 4 * (x.get(0) + x.get(1))},
                 new double[]{4 * (x.get(0) + x.get(1)), 4 * x.get(0) + 12 * pow(x.get(1), 2) - 5}
         };
 
-        Function<MyPoint, Double> f4 = x -> (pow(x.get(0) + 10 * x.get(1), 2) + 5 * pow(x.get(2) - x.get(3), 2) +
+        Function<Point, Double> f4 = x -> (pow(x.get(0) + 10 * x.get(1), 2) + 5 * pow(x.get(2) - x.get(3), 2) +
                 pow(x.get(1) - 2 * x.get(2), 4) + 10 * pow(x.get(0) - x.get(3), 4));
-        Function<MyPoint, double[]> gradF4 = x -> new double[]{
+        Function<Point, double[]> gradF4 = x -> new double[]{
                 2 * (20 * pow(x.get(0) - x.get(3), 3) + x.get(0) + 10 * x.get(1)),
                 4 * (5 * (x.get(0) + 10 * x.get(1)) + pow(x.get(1) - 2 * x.get(2), 3)),
                 10 * (x.get(2) - x.get(3)) - 8 * pow(x.get(1) - 2 * x.get(2), 3),
                 10 * (-4 * pow(x.get(0) - x.get(3), 3) - x.get(2) + x.get(3))
         };
-        Function<MyPoint, double[][]> hesF4 = x -> new double[][]{
-                //TO DO
+        Function<Point, double[][]> hesF4 = x -> new double[][]{
+                new double[]{120*pow(x.get(0) - x.get(3), 2) + 2), },
+                new double[]{},
+                new double[]{},
+                new double[]{}
         };
 
         this.data = new Data[]{
-<<<<<<< HEAD:lab4/src/MySource.java
-                new Data(new MyFunction(f, gradF, hesF),
-                        new MyPoint(new double[]{4, 1})),
-                new Data(new MyFunction(f2, gradF2, hesF2),
-                        new MyPoint(new double[]{-1.2, 1})),
-                new Data(new MyFunction(f3, gradF3, hesF3),
-                        new MyPoint(new double[]{0, 0})),
-                new Data(new MyFunction(f4, gradF4, hesF4),
-                        new MyPoint(new double[]{0, 0}))
-=======
-                new Data(new ExtendedFunction(f, gradF, hesF),
-                        new Point(new double[]{4, 1})),
-                new Data(new ExtendedFunction(f2, gradF2, hesF2),
-                        new Point(new double[]{-1.2, 1}))
->>>>>>> 2920a214c15a2ec68386c1a95b389a092674fd17:lab4/src/utils/Source.java
+                new Data(new ExtendedFunction(f, gradF, hesF), new Point(new double[]{4, 1})),
+                new Data(new ExtendedFunction(f2, gradF2, hesF2), new Point(new double[]{-1.2, 1})),
+                new Data(new ExtendedFunction(f3, gradF3, hesF3), new Point(new double[]{0, 0})),
+                new Data(new ExtendedFunction(f4, gradF4, hesF4), new Point(new double[]{0, 0}))
         };
     }
 }
