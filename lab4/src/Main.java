@@ -7,14 +7,14 @@ import utils.Point;
 import utils.Source;
 
 public class Main {
-    private static int mod = 3;
+    private static int mod = 2;
 
     public static void main(String[] args) {
         Source source = new Source();
         source.changeMod(mod);
 
         Point res = new Newton().minimum(source.getFunction(), source.getPoint(), 0.001);
-        System.out.println(res); //ne ok
+        System.out.println(res); // ok
         res = new NewtonDirectionDescent().minimum(source.getFunction(), source.getPoint(), 0.0001);
         System.out.println(res); // ok
         res = new NewtonOptimisation().minimum(source.getFunction(), source.getPoint(), 0.0001);

@@ -16,7 +16,7 @@ public class NewtonDirectionDescent implements Method {
         x.plus(s);
         do {
             Point g = new Point(f.getGradientValue(x));
-            s = slay(f.getHessianValue(x), new Point(g.coordinates).coordinates);
+            s = slay(f.getHessianValue(x), Arrays.stream(new Point(g.coordinates).coordinates).map(y -> -y).toArray());
             if (multiplyPoints(s, g) < 0) {
                 d = s;
             } else {

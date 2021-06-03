@@ -1,8 +1,5 @@
 package utils;
 
-import utils.ExtendedFunction;
-import utils.Point;
-
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -11,9 +8,6 @@ public interface Method {
 
     default Point slay(double[][] h, double[] f) {
         int n = f.length;
-        for (int i = 0; i < n; i++) {
-            f[i] = -f[i];
-        }
 
         int[] realRows = new int[n];
         for (int i = 0; i < n; i++) {
@@ -28,6 +22,10 @@ public interface Method {
                 }
             }
             int tmp = realRows[sel];
+            realRows[sel] = realRows[row];
+            realRows[row] = tmp;
+
+            tmp = realRows[sel];
             realRows[sel] = realRows[row];
             realRows[row] = tmp;
 
