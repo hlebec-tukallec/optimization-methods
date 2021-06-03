@@ -112,9 +112,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return "Point{" +
-                "coordinates=" + Arrays.toString(coordinates) +
-                '}';
+        return Arrays.toString(coordinates);
     }
 
     public void plus(final Point y) {

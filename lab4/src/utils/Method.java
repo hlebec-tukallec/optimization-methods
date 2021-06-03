@@ -6,6 +6,8 @@ import java.util.function.Function;
 public interface Method {
     Point minimum(ExtendedFunction f, Point x0, double eps);
 
+    int getCountOfIterations();
+
     default Point slay(double[][] h, double[] f) {
         int n = f.length;
 

@@ -26,6 +26,11 @@ public class BroadenFletcherChen implements Method {
         return x;
     }
 
+    @Override
+    public int getCountOfIterations() {
+        return 0;
+    }
+
     private double[][] getNextH(final double[][] H, final Point sPoint, final Point yPoint) {
         double[] s = sPoint.coordinates;
         double[] y = yPoint.coordinates;
