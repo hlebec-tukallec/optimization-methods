@@ -24,6 +24,26 @@ public class Point {
         return new Point(c);
     }
 
+    public static Point minus(final Point x, final Point y) {
+        int n = x.coordinates.length;
+        double[] c = new double[n];
+        for (int i = 0; i < n; i++) {
+            c[i] = x.coordinates[i] - y.coordinates[i];
+        }
+        return new Point(c);
+    }
+
+    public static Point multiplyMatrixAndPoint(final double[][] m, final Point x) {
+        int n = m.length;
+       double[] c = new double[n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                c[i] += m[i][j] * x.coordinates[j];
+            }
+        }
+        return new Point(c);
+    }
+
 
     public double[] getCoordinates() {
         return coordinates;

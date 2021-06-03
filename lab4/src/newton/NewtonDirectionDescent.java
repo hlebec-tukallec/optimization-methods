@@ -1,6 +1,7 @@
 package newton;
 
 import utils.ExtendedFunction;
+import utils.Method;
 import utils.Point;
 
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public class NewtonDirectionDescent implements Method {
         x.plus(s);
         do {
             Point g = new Point(f.getGradientValue(x));
-            s = slay(f.getHessianValue(x), g.coordinates);
+            s = slay(f.getHessianValue(x), new Point(g.coordinates).coordinates);
             if (multiplyPoints(s, g) < 0) {
                 d = s;
             } else {

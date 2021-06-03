@@ -1,4 +1,4 @@
-package newton;
+package utils;
 
 import utils.ExtendedFunction;
 import utils.Point;

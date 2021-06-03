@@ -1,6 +1,7 @@
 package newton;
 
 import utils.ExtendedFunction;
+import utils.Method;
 import utils.Point;
 
 public class Newton implements Method {
