@@ -88,10 +88,10 @@ public class Source {
                 10 * (-4 * pow(x.get(0) - x.get(3), 3) - x.get(2) + x.get(3))
         };
         Function<Point, double[][]> hesF4 = x -> new double[][]{
-                new double[]{120*pow(x.get(0) - x.get(3), 2) + 2), },
-                new double[]{},
-                new double[]{},
-                new double[]{}
+                new double[]{120 * pow(x.get(0) - x.get(3), 2) + 2, 20, 0, -120 * pow(x.get(0) - x.get(3), 2)},
+                new double[]{20, 200 + 12 * (x.get(1) - 2*x.get(2)), -24 * pow(x.get(1) - 2 * x.get(2), 2), 0},
+                new double[]{0, -24 * pow(x.get(1) - 2 * x.get(2), 2), 10 + 48 * (x.get(1) - 2 * x.get(2)), -10},
+                new double[]{-120 * pow(x.get(0) - x.get(3), 2), 0, -10, 120 * pow(x.get(0) - x.get(3), 2) + 10}
         };
 
         this.data = new Data[]{
