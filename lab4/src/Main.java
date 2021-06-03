@@ -7,7 +7,7 @@ import utils.Point;
 import utils.Source;
 
 public class Main {
-    private static int mod = 2;
+    private static int mod = 3;
 
     public static void main(String[] args) {
         Source source = new Source();

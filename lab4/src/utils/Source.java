@@ -90,7 +90,7 @@ public class Source {
         };
         Function<Point, double[][]> hesF4 = x -> new double[][]{
                 new double[]{120 * pow(x.get(0) - x.get(3), 2) + 2, 20, 0, -120 * pow(x.get(0) - x.get(3), 2)},
-                new double[]{20, 200 + 12 * (x.get(1) - 2 * x.get(2)), -24 * pow(x.get(1) - 2 * x.get(2), 2), 0},
+                new double[]{20, 200 + 12 * pow((x.get(1) - 2 * x.get(2)), 2    ), -24 * pow(x.get(1) - 2 * x.get(2), 2), 0},
                 new double[]{0, -24 * pow(x.get(1) - 2 * x.get(2), 2), 10 + 48 * (x.get(1) - 2 * x.get(2)), -10},
                 new double[]{-120 * pow(x.get(0) - x.get(3), 2), 0, -10, 120 * pow(x.get(0) - x.get(3), 2) + 10}
         };
@@ -105,13 +105,13 @@ public class Source {
                         1.0 / pow(1 + 0.25 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 2) - (23328 * pow(-2 + x.get(0), 2)) / pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) -
                         8 * x.get(1) + 4 * x.get(1) * x.get(1), 3) + 648 / pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 2)),
                         4.0 / 9 * (-1 + x.get(1)) * (-(-1 + x.get(0)) / pow(1 + 1.0 / 4 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 3) - (23328 * (-2 + x.get(0))) /
-                        pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 3))
+                                pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 3))
                 },
                 new double[]{4.0 / 9 * (-1 + x.get(1)) * (-(-1 + x.get(0)) / pow(1 + 1.0 / 4 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 3) - (23328 * (-2 + x.get(0))) /
                         pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 3)),
-                        2.0/9 * (4.0/9 * pow(x.get(1) - 1, 2) * (-2.0/pow(1.0/4 * pow(x.get(0) - 1, 2) + 1.0/9 *pow(x.get(1) - 1, 2) + 1, 3) - 1.0/
-                        pow(1.0/4 * pow(x.get(0) - 2, 2) + 1.0/9 * pow(x.get(1) - 1, 2) + 1, 3)) + 1.0/pow(1.0/4 * pow(x.get(0) - 2, 2) + 1.0/9 * pow(x.get(1) - 1, 2) + 1, 2) +
-                        2.0/pow(1.0/4 * pow(x.get(0) - 1, 2) + 1.0/9 * pow(x.get(1) - 1, 2) + 1, 2))
+                        2.0 / 9 * (4.0 / 9 * pow(x.get(1) - 1, 2) * (-2.0 / pow(1.0 / 4 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 3) - 1.0 /
+                                pow(1.0 / 4 * pow(x.get(0) - 2, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 3)) + 1.0 / pow(1.0 / 4 * pow(x.get(0) - 2, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2) +
+                                2.0 / pow(1.0 / 4 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2))
                 }
         };
         this.data = new Data[]{
