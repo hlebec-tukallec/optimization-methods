@@ -71,16 +71,17 @@ public class Source {
         Function<Point, Double> f3 = x -> (pow(pow(x.get(0), 2) + x.get(1) - 11, 2) +
                 pow(x.get(0) + pow(x.get(1), 2) - 7, 2));
         Function<Point, double[]> gradF3 = x -> new double[]{
-                4 * (pow(x.get(1), 3) + x.get(0) * x.get(1) - 11 * x.get(0)) + 2 * (x.get(0) + pow(x.get(1), 2) - 7),
+                4 * (pow(x.get(0), 3) + x.get(0) * x.get(1) - 11 * x.get(0)) + 2 * (x.get(0) + pow(x.get(1), 2) - 7),
                 2 * (pow(x.get(0), 2) + x.get(1) - 11) + 4 * (x.get(0) * x.get(1) + pow(x.get(1), 3) - 7 * x.get(1))
         };
         Function<Point, double[][]> hesF3 = x -> new double[][]{
                 new double[]{12 * pow(x.get(0), 2) + 4 * x.get(1) - 42, 4 * (x.get(0) + x.get(1))},
-                new double[]{4 * (x.get(0) + x.get(1)), 4 * x.get(0) + 12 * pow(x.get(1), 2) - 5}
+                new double[]{4 * (x.get(0) + x.get(1)), 4 * x.get(0) + 12 * pow(x.get(1), 2) - 26}
         };
 
         Function<Point, Double> f4 = x -> (pow(x.get(0) + 10 * x.get(1), 2) + 5 * pow(x.get(2) - x.get(3), 2) +
                 pow(x.get(1) - 2 * x.get(2), 4) + 10 * pow(x.get(0) - x.get(3), 4));
+
         Function<Point, double[]> gradF4 = x -> new double[]{
                 2 * (20 * pow(x.get(0) - x.get(3), 3) + x.get(0) + 10 * x.get(1)),
                 4 * (5 * (x.get(0) + 10 * x.get(1)) + pow(x.get(1) - 2 * x.get(2), 3)),
@@ -89,16 +90,36 @@ public class Source {
         };
         Function<Point, double[][]> hesF4 = x -> new double[][]{
                 new double[]{120 * pow(x.get(0) - x.get(3), 2) + 2, 20, 0, -120 * pow(x.get(0) - x.get(3), 2)},
-                new double[]{20, 200 + 12 * (x.get(1) - 2*x.get(2)), -24 * pow(x.get(1) - 2 * x.get(2), 2), 0},
+                new double[]{20, 200 + 12 * (x.get(1) - 2 * x.get(2)), -24 * pow(x.get(1) - 2 * x.get(2), 2), 0},
                 new double[]{0, -24 * pow(x.get(1) - 2 * x.get(2), 2), 10 + 48 * (x.get(1) - 2 * x.get(2)), -10},
                 new double[]{-120 * pow(x.get(0) - x.get(3), 2), 0, -10, 120 * pow(x.get(0) - x.get(3), 2) + 10}
         };
 
+        Function<Point, Double> f5 = x -> (-2.0 / (0.25 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1) - 1.0 / (0.25 * pow(x.get(0) - 2, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1) + 100);
+        Function<Point, double[]> gradF5 = x -> new double[]{
+                (648 * (x.get(0) - 2)) / pow(9 * pow(x.get(0), 2) - 36 * x.get(0) + 4 * pow(x.get(1), 2) - 8 * x.get(1) + 76, 2) + (x.get(0) - 1) / pow(0.25 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2),
+                2.0 / 9 * (x.get(1) - 1) * (2.0 / pow(0.25 * pow(x.get(0) - 1, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2) + 1.0 / pow(0.25 * pow(x.get(0) - 2, 2) + 1.0 / 9 * pow(x.get(1) - 1, 2) + 1, 2))
+        };
+        Function<Point, double[][]> hesF5 = x -> new double[][]{
+                new double[]{(-pow(-1 + x.get(0), 2) / pow(1 + 0.25 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 3) +
+                        1.0 / pow(1 + 0.25 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 2) - (23328 * pow(-2 + x.get(0), 2)) / pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) -
+                        8 * x.get(1) + 4 * x.get(1) * x.get(1), 3) + 648 / pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 2)),
+                        4.0 / 9 * (-1 + x.get(1)) * (-(-1 + x.get(0)) / pow(1 + 1.0 / 4 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 3) - (23328 * (-2 + x.get(0))) /
+                        pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 3))
+                },
+                new double[]{4.0 / 9 * (-1 + x.get(1)) * (-(-1 + x.get(0)) / pow(1 + 1.0 / 4 * pow(-1 + x.get(0), 2) + 1.0 / 9 * pow(-1 + x.get(1), 2), 3) - (23328 * (-2 + x.get(0))) /
+                        pow(76 - 36 * x.get(0) + 9 * x.get(0) * x.get(0) - 8 * x.get(1) + 4 * x.get(1) * x.get(1), 3)),
+                        2.0/9 * (4.0/9 * pow(x.get(1) - 1, 2) * (-2.0/pow(1.0/4 * pow(x.get(0) - 1, 2) + 1.0/9 *pow(x.get(1) - 1, 2) + 1, 3) - 1.0/
+                        pow(1.0/4 * pow(x.get(0) - 2, 2) + 1.0/9 * pow(x.get(1) - 1, 2) + 1, 3)) + 1.0/pow(1.0/4 * pow(x.get(0) - 2, 2) + 1.0/9 * pow(x.get(1) - 1, 2) + 1, 2) +
+                        2.0/pow(1.0/4 * pow(x.get(0) - 1, 2) + 1.0/9 * pow(x.get(1) - 1, 2) + 1, 2))
+                }
+        };
         this.data = new Data[]{
                 new Data(new ExtendedFunction(f, gradF, hesF), new Point(new double[]{4, 1})),
                 new Data(new ExtendedFunction(f2, gradF2, hesF2), new Point(new double[]{-1.2, 1})),
                 new Data(new ExtendedFunction(f3, gradF3, hesF3), new Point(new double[]{0, 0})),
-                new Data(new ExtendedFunction(f4, gradF4, hesF4), new Point(new double[]{0, 0}))
+                new Data(new ExtendedFunction(f4, gradF4, hesF4), new Point(new double[]{0, 0})),
+                new Data(new ExtendedFunction(f5, gradF5, hesF5), new Point(new double[]{0, 0}))
         };
     }
 }
