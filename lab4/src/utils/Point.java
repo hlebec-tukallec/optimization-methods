@@ -113,7 +113,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return "(" + Arrays.stream(coordinates).mapToObj(String::valueOf).collect(Collectors.joining(";")) + ")";
+        return "(" + Arrays.stream(coordinates).mapToObj(s -> String.format("%.20f", s)).collect(Collectors.joining(";")) + ")";
     }
 
     public void plus(final Point y) {
