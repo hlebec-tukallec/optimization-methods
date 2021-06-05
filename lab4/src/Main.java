@@ -17,7 +17,7 @@ public class Main {
     5: 3x^2+xy+2y^2-x-4y (1.1.1)
     6: -y*sqrt(x)+2*y^2+x-14y (1.1.2)
 */
-    private static int mod = 5;
+    private static int mod = 1;
 /*
     0: Newton();
     1: NewtonDirectionDescent();

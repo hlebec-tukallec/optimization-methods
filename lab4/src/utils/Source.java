@@ -127,7 +127,7 @@ public class Source {
 
         Function<Point, Double> f7 = x -> (-x.get(1) * sqrt(x.get(0)) + 2 * pow(x.get(1), 2) + x.get(0) - 14 * x.get(1));
         Function<Point, double[]> gradF7 = x -> new double[]{
-                (1 - x.get(1) / (2 * sqrt(x.get(0)))),
+                (- x.get(1) / (2 * sqrt(x.get(0)))) + 1,
                 (-sqrt(x.get(0)) + 4 * x.get(1) - 14)};
         Function<Point, double[][]> hesF7 = x -> new double[][]{
                 new double[]{x.get(1) / (4 * x.get(0) * sqrt(x.get(0))), -1 / (2 * sqrt(x.get(0)))},
@@ -136,6 +136,7 @@ public class Source {
 
         this.data = new Data[]{
                 new Data(new ExtendedFunction(f, gradF, hesF), new Point(new double[]{4, 1})),
+                // 2.1 begins here, mod = 1
                 new Data(new ExtendedFunction(f2, gradF2, hesF2), new Point(new double[]{-1.2, 1})),
                 new Data(new ExtendedFunction(f3, gradF3, hesF3), new Point(new double[]{1, 1})),
                 new Data(new ExtendedFunction(f4, gradF4, hesF4), new Point(new double[]{1, 1, 1, 1})),

@@ -12,7 +12,7 @@ public class BroadenFletcherChen implements Method {
         Point gradient = new Point(f.getGradientValue(x));
         int n = gradient.coordinates.length;
         double[][] H = createE(n);
-
+        System.out.println(x);
         while (norm(gradient) >= eps) {
             iter++;
             Point p = Point.negative(Point.multiplyMatrixAndPoint(H, gradient));
@@ -24,6 +24,7 @@ public class BroadenFletcherChen implements Method {
             H = getNextH(H, Point.minus(nextX, x), Point.minus(nextGrad, gradient));
             x = nextX;
             gradient = nextGrad;
+            System.out.println(x);
         }
         return x;
     }

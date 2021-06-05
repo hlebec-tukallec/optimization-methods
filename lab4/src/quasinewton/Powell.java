@@ -12,7 +12,7 @@ public class Powell implements Method {
         Point w = Point.negative(new Point(f.getGradientValue(x)));
         int n = w.coordinates.length;
         double[][] H = createE(n);
-
+        System.out.println(x);
         while (norm(w) >= eps) {
             iter++;
             Point p = Point.multiplyMatrixAndPoint(H, w);
@@ -24,6 +24,7 @@ public class Powell implements Method {
             H = getNextH(H, Point.minus(nextX, x), Point.minus(nextW, w));
             x = nextX;
             w = nextW;
+            System.out.println(x);
         }
         return x;
     }
