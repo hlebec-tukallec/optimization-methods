@@ -12,13 +12,13 @@ public class NewtonDirectionDescent implements Method {
     public Point minimum(final ExtendedFunction f, final Point x0, final double eps) {
         iter = 1;
         Point x = new Point(x0);
-        System.out.println(x);
+//        System.out.println(x);
         Point d = new Point(Arrays.stream(f.getGradientValue(x)).map(a -> -a).toArray());
         double r = countLambda(f, x, d);
-        System.out.println("odnomernoe znachenie" + r);
+//        System.out.println("одномерная оптимизация дала: " + r);
         Point s = Point.multiplyOnScalar(d, r);
         x.plus(s);
-        System.out.println(x);
+//        System.out.println(x);
         do {
             iter++;
             Point g = new Point(f.getGradientValue(x));
@@ -29,10 +29,10 @@ public class NewtonDirectionDescent implements Method {
                 d = Point.negative(g);
             }
             r = countLambda(f, x, d);
-            System.out.println("odnomernoe znachenie" + r);
+//            System.out.println("одномерная оптимизация дала: " + r);
             s = Point.multiplyOnScalar(d, r);
             x.plus(s);
-            System.out.println(x);
+//            System.out.println(x);
         } while (norm(s) >= eps);
         return x;
     }

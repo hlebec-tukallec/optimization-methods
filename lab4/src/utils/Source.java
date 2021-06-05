@@ -141,9 +141,10 @@ public class Source {
                 new Data(new ExtendedFunction(f4, gradF4, hesF4), new Point(new double[]{1, 1, 1, 1})),
                 new Data(new ExtendedFunction(f5, gradF5, hesF5), new Point(new double[]{1, 1})),
                 // for 1.1: 3x^2+xy+2y^2-x-4y, min point: (0, 1)
-                new Data(new ExtendedFunction(f6, gradF6, hesF6), new Point(new double[]{1, -1})),
+//                new Data(new ExtendedFunction(f6, gradF6, hesF6), new Point(new double[]{1, -1})),
+                new Data(new ExtendedFunction(f6, gradF6, hesF6), new Point(new double[]{-15, -5})),
                 // for 1.1: -y*sqrt(x)+2*y^2+x-14y, min point: (4, 4)
-                new Data(new ExtendedFunction(f7, gradF7, hesF7), new Point(new double[]{1, -1}))
+                new Data(new ExtendedFunction(f7, gradF7, hesF7), new Point(new double[]{3, 5}))
         };
     }
 }

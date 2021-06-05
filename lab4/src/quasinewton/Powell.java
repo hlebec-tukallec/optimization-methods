@@ -5,6 +5,7 @@ import utils.Method;
 import utils.Point;
 
 public class Powell implements Method {
+    private int iter = 0;
     @Override
     public Point minimum(final ExtendedFunction f, final Point x0, final double eps) {
         Point x = new Point(x0);
@@ -13,6 +14,7 @@ public class Powell implements Method {
         double[][] H = createE(n);
 
         while (norm(w) >= eps) {
+            iter++;
             Point p = Point.multiplyMatrixAndPoint(H, w);
             double alpha = countLambda(f, x, p);
             Point d = Point.multiplyOnScalar(p, alpha);
@@ -28,7 +30,7 @@ public class Powell implements Method {
 
     @Override
     public int getCountOfIterations() {
-        return 0;
+        return iter;
     }
 
     private double[][] getNextH(final double[][] H, final Point sPoint, final Point yPoint) {
