@@ -15,7 +15,7 @@ public class NewtonDirectionDescent implements Method {
 //        System.out.println(x);
         Point d = new Point(Arrays.stream(f.getGradientValue(x)).map(a -> -a).toArray());
         double r = countLambda(f, x, d);
-//        System.out.println("одномерная оптимизация дала: " + r);
+//        System.out.println("odnomernoe znachenie" + r);
         Point s = Point.multiplyOnScalar(d, r);
         x.plus(s);
 //        System.out.println(x);
@@ -29,7 +29,7 @@ public class NewtonDirectionDescent implements Method {
                 d = Point.negative(g);
             }
             r = countLambda(f, x, d);
-//            System.out.println("одномерная оптимизация дала: " + r);
+//            System.out.println("odnomernoe znachenie" + r);
             s = Point.multiplyOnScalar(d, r);
             x.plus(s);
 //            System.out.println(x);

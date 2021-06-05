@@ -10,15 +10,16 @@ public class Newton implements Method {
     private int iter = 0;
     @Override
     public Point minimum(final ExtendedFunction f, final Point x0, final double eps) {
-        iter = 0;
+        iter = 1;
         System.out.println(x0);
-        Point p, x = new Point(x0);
-        do {
+        Point x = new Point(x0);
+        Point p = slay(f.getHessianValue(x), Arrays.stream(f.getGradientValue(x)).map(y -> -y).toArray());
+        while (norm(p) >= eps) {
             iter++;
-            p = slay(f.getHessianValue(x), Arrays.stream(f.getGradientValue(x)).map(y -> -y).toArray());
             x.plus(p);
+            p = slay(f.getHessianValue(x), Arrays.stream(f.getGradientValue(x)).map(y -> -y).toArray());
             System.out.println(x);
-        } while (norm(p) >= eps);
+        }
         return x;
     }
 

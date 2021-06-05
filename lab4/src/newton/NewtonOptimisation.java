@@ -17,6 +17,8 @@ public class NewtonOptimisation implements Method {
             iter++;
             d = slay(f.getHessianValue(x), Arrays.stream(f.getGradientValue(x)).map(y -> -y).toArray());
             double r = countLambda(f, x, d);
+            System.out.println("Одномерное значение дало ответ " + r);
+
             s = Point.multiplyOnScalar(d, r);
             x.plus(s);
         } while (norm(s) >= eps);

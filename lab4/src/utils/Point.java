@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Point {
     public final double[] coordinates;
@@ -112,7 +113,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return Arrays.toString(coordinates);
+        return "(" + Arrays.stream(coordinates).mapToObj(String::valueOf).collect(Collectors.joining(";")) + ")";
     }
 
     public void plus(final Point y) {
