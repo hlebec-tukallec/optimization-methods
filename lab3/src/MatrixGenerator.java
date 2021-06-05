@@ -155,6 +155,9 @@ public class MatrixGenerator {
         writeDoubleArray(b, dirName + "b");
     }
 
+
+
+
     private double[] generateBFromOneToN() {
         double[] b = new double[n];
         for (int i = 0; i < n; i++) {
