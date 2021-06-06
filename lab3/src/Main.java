@@ -1,3 +1,6 @@
+import matrixes.MatrixGenerator;
+import matrixes.ProfileMatrix;
+
 import java.util.Random;
 
 public class Main {

@@ -1,3 +1,6 @@
+import matrixes.MatrixGenerator;
+import matrixes.ProfileMatrix;
+
 import java.util.Arrays;
 
 public class LUTest {

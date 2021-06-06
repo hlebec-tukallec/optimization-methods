@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import matrixes.ProfileMatrix;
 
 public class Gauss {
     // Решение хранится в векторе b (правая часть)
